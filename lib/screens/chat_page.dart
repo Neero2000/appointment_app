@@ -6,7 +6,7 @@ import 'package:flutter_application_1/utils/config.dart';
 import '../components/chat_buble.dart';
 
 class ChatPage extends StatelessWidget {
-  ChatPage({Key? key}) : super(key: key);
+  ChatPage({Key? key, String? userEmail}) : super(key: key);
   final _controller = ScrollController();
 
   final CollectionReference messages =
