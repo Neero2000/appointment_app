@@ -1,18 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/components/doctor_card.dart';
+import 'src/config/index.dart';
+
 import 'package:flutter_application_1/firebase_options.dart';
-import 'package:flutter_application_1/main_layout.dart';
-import 'package:flutter_application_1/screens/main_layout2.dart';
-import 'package:flutter_application_1/screens/auth_page.dart';
-import 'package:flutter_application_1/screens/booking_page.dart';
-import 'package:flutter_application_1/screens/chat_page.dart';
-import 'package:flutter_application_1/screens/doctor_details.dart';
-import 'package:flutter_application_1/screens/home_admin.dart';
-import 'package:flutter_application_1/screens/home_page.dart';
-import 'package:flutter_application_1/screens/register_page.dart';
-import 'package:flutter_application_1/screens/succes_booked.dart';
-import 'package:flutter_application_1/utils/config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,14 +12,10 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  //hadi bah ndiro push lel naviagateur
-  static final navigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     //define theme data here
-
     return MaterialApp(
-      navigatorKey: navigatorKey,
       title: 'Flutter Agenda doctor',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -63,26 +47,26 @@ class MyApp extends StatelessWidget {
               BoxShadow(
                 color: Colors.black.withOpacity(0.3),
                 blurRadius: 4,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
         ),
       ),
-      initialRoute: '/',
       //this is initial route of the app
+      initialRoute: SplashPage.routeName,
       //which is auth page (log in and sing in )
       routes: {
-        '/': (context) => const AuthPage(),
+        SplashPage.routeName: (context) => const SplashPage(),
+        AuthPage.routeName: (context) => const AuthPage(),
         // this is for main layout after log in
-        'main': (context) => const MainLayout(),
-        'maaaain': (context) => const MainLayout2(),
-        'doc_details': (context) => const DoctorDetails(),
-        'booking_page': (context) => const BookingPage(),
-        'succes_booked': (context) => const AppointmentBooked(),
-        'register_page': (context) => const RegisterPage(),
-        'chat': (context) => ChatPage(),
-        'home_admin': (context) => AdminPage(),
+        MainPage.routeName: (context) => const MainPage(),
+        DoctorDetailsPage.routeName: (context) => const DoctorDetailsPage(),
+        BookingPage.routeName: (context) => const BookingPage(),
+        AppointmentBookedPage.routeName: (context) => const AppointmentBookedPage(),
+        RegisterPage.routeName: (context) => const RegisterPage(),
+        ChatPage.routeName: (context) => const ChatPage(),
+        'home_admin': (context) => const AdminPage(),
       },
     );
   }
