@@ -56,10 +56,9 @@ class MyApp extends StatelessWidget {
       //this is initial route of the app
       initialRoute: SplashPage.routeName,
       //which is auth page (log in and sing in )
-      routes: {
+routes: {
         SplashPage.routeName: (context) => const SplashPage(),
         AuthPage.routeName: (context) => const AuthPage(),
-        // this is for main layout after log in
         MainPage.routeName: (context) => const MainPage(),
         DoctorDetailsPage.routeName: (context) => const DoctorDetailsPage(),
         BookingPage.routeName: (context) => const BookingPage(),
