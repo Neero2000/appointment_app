@@ -1,15 +1,12 @@
 import '../../../config/index.dart';
 
-class Doctorcard extends StatelessWidget {
-  // ignore: use_key_in_widget_constructors
-  const Doctorcard({super.key, required this.route});
-  final String route;
+class DoctorCard extends StatelessWidget {
+  final DoctorModel doctor;
+  const DoctorCard({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+    return SizedBox(
       height: 160,
       child: GestureDetector(
         child: Card(
@@ -20,51 +17,51 @@ class Doctorcard extends StatelessWidget {
           ),
           child: Row(
             children: [
+              const SizedBox(width: 6),
               SizedBox(
                 width: Config.screenWidth! * 0.33,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
-                    'assets/doctor2.jpg',
+                    doctor.assetPath,
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
-              const Flexible(
+              Flexible(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        'Dr ramy',
-                        style: TextStyle(
+                        doctor.name,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        'Cardiologist',
-                        style: TextStyle(
+                        doctor.speciality,
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      Spacer(flex: 1),
-                      Spacer(flex: 1),
-                      Spacer(flex: 1),
+                      const Spacer(flex: 1),
+                      const Spacer(flex: 1),
+                      const Spacer(flex: 1),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Icon(Icons.star_border, color: Colors.yellow, size: 16),
-                          Spacer(flex: 1),
-                          Text('4.5'),
-                          Spacer(flex: 1),
-                          Text('Reviews'),
-                          Spacer(flex: 1),
-                          Text('(20)'),
-                          Spacer(flex: 1),
+                          const Icon(Icons.star_border, color: Colors.yellow, size: 16),
+                          const SizedBox(width: 8),
+                          Text(doctor.notation.toStringAsFixed(2)),
+                          const Expanded(child: SizedBox()),
+                          const Text('Reviews'),
+                          const SizedBox(width: 8),
+                          Text('(${doctor.reviewNumber})'),
                         ],
                       )
                     ],
@@ -76,7 +73,10 @@ class Doctorcard extends StatelessWidget {
         ),
         onTap: () {
           //redirect to doctor details page
-          Navigator.of(context).pushNamed(route);
+          Navigator.of(context).pushNamed(
+            DoctorDetailsPage.routeName,
+            arguments: DoctorDetailsArgs(doctor: doctor),
+          );
         }, //redirect to doctor details
       ),
     );

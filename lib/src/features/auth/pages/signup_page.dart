@@ -1,13 +1,13 @@
 import '../../../config/index.dart';
 
-class RegisterPage extends StatefulWidget {
-  static const String routeName = '/register_page';
-  const RegisterPage({super.key});
+class SignupPage extends StatefulWidget {
+  static const String routeName = '/signup_page';
+  const SignupPage({super.key});
   @override
-  State<RegisterPage> createState() => RegisterPageState();
+  State<SignupPage> createState() => SignupPageState();
 }
 
-class RegisterPageState extends State<RegisterPage> {
+class SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
     Config().init(context);

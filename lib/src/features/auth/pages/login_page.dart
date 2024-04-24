@@ -1,13 +1,13 @@
 import '../../../config/index.dart';
 
-class AuthPage extends StatefulWidget {
-  static const String routeName = '/auth_page';
-  const AuthPage({super.key});
+class LoginPage extends StatefulWidget {
+  static const String routeName = '/login_page';
+  const LoginPage({super.key});
   @override
-  State<AuthPage> createState() => AuthPageState();
+  State<LoginPage> createState() => LoginPageState();
 }
 
-class AuthPageState extends State<AuthPage> {
+class LoginPageState extends State<LoginPage> {
   FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils();
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class AuthPageState extends State<AuthPage> {
               Config.spaceSmall,
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(RegisterPage.routeName);
+                  Navigator.of(context).pushNamed(SignupPage.routeName);
                 },
                 child: const Text(
                   'Sign up',

@@ -1,15 +1,16 @@
 import '../../../config/index.dart';
 
-class DoctorDetailsPage extends StatefulWidget {
+class DoctorDetailsArgs {
+  final DoctorModel doctor;
+  const DoctorDetailsArgs({required this.doctor});
+}
+
+class DoctorDetailsPage extends StatelessWidget {
   static const String routeName = '/doctor_details_page';
   const DoctorDetailsPage({super.key});
   @override
-  State<DoctorDetailsPage> createState() => _DoctorDetailsPageState();
-}
-
-class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
-  @override
   Widget build(BuildContext context) {
+    final DoctorDetailsArgs args = ModalRoute.of(context)?.settings.arguments as DoctorDetailsArgs;
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Doctor Details',
@@ -19,7 +20,9 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            const AboutDoctor(),
+            AboutDoctor(
+              doctor: args.doctor,
+            ),
             const Spacer(),
             Padding(
               padding: const EdgeInsets.all(20),
@@ -41,13 +44,11 @@ class _DoctorDetailsPageState extends State<DoctorDetailsPage> {
 }
 
 class AboutDoctor extends StatelessWidget {
-  const AboutDoctor({
-    super.key,
-  });
+  final DoctorModel doctor;
+  const AboutDoctor({super.key, required this.doctor});
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -55,24 +56,24 @@ class AboutDoctor extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0),
             child: Image.asset(
-              'assets/doctor2.jpg',
+              doctor.assetPath,
               width: 130.0,
               height: 130.0,
               fit: BoxFit.cover,
             ),
           ),
           Config.spaceMedium,
-          const Text(
-            'Dr Aymen Azzouz',
-            style: TextStyle(
+          Text(
+            doctor.name,
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 24.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          const Text(
-            'Cardiologist',
-            style: TextStyle(
+          Text(
+            doctor.speciality,
+            style: const TextStyle(
               color: Color(0xFF4B5563),
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
@@ -82,9 +83,9 @@ class AboutDoctor extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildInfoCard('assets/doc1.png', 'Patients'),
-              _buildInfoCard('assets/doc2.png', 'Experience +10'),
-              _buildInfoCard('assets/doc3.png', 'Notation +5'),
+              _buildInfoCard('assets/doc1.png', 'Patients ${doctor.patientNumber}'),
+              _buildInfoCard('assets/doc2.png', 'Experience +${doctor.experience}'),
+              _buildInfoCard('assets/doc3.png', 'Notation +${doctor.notation.toStringAsFixed(1)}'),
             ],
           ),
           const SizedBox(height: 16),
@@ -99,11 +100,11 @@ class AboutDoctor extends StatelessWidget {
               ),
             ),
           ),
-          const Align(
+          Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              '     Monday-Friday, 08.00 AM-18.00 pM',
-              style: TextStyle(
+              '     ${doctor.startDate}-${doctor.endDate}, ${doctor.startTime}-${doctor.endTime}',
+              style: const TextStyle(
                 color: Color(0xFF6B7280),
                 fontWeight: FontWeight.bold,
                 fontSize: 16,

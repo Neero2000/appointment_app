@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -38,6 +37,8 @@ class _HomePageState extends State<HomePage> {
 
   late String userFirstName;
 
+  final DataUtils _dataUtils = DataUtils();
+
   @override
   void initState() {
     super.initState();
@@ -58,112 +59,118 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Config().init(context);
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
+      appBar: AppBar(
+        title: Text(
+          userFirstName,
+          style: const TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      userFirstName ?? '',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    CupertinoButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NotificationPage(),
-                          ),
-                        );
-                      },
-                      child: const Icon(
-                        CupertinoIcons.bell,
-                        size: 30,
-                      ),
-                    ),
-                  ],
+        centerTitle: false,
+        actions: [
+          CupertinoButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const NotificationPage(),
                 ),
-                const Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Config.spaceSmall,
-                SizedBox(
-                  height: 150,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: medCat.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 20),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Add your onTap logic here
-                          },
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                medCat[index]['icon'],
-                                width: 80,
-                                height: 80,
-                              ),
-                              const SizedBox(height: 5),
-                              Text(
-                                medCat[index]['Categories'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                const Text(
-                  'Rendez-vous aujourd\'hui',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Config.spaceSmall,
-                const AppointmentCard(),
-                Config.spaceSmall,
-                const Text(
-                  'Meilleur docteur',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Column(
-                  children: List.generate(10, (index) {
-                    return const Doctorcard(
-                      route: 'doc_details',
-                    );
-                  }),
-                ),
-              ],
+              );
+            },
+            child: const Icon(
+              CupertinoIcons.bell,
+              size: 30,
             ),
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.only(left: 18, right: 18, bottom: 70, top: 24),
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: <Widget>[
+            const Text(
+              'Categories',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Config.spaceSmall,
+            SizedBox(
+              height: 100,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: medCat.length,
+                separatorBuilder: (context, index) {
+                  return const SizedBox(width: 12);
+                },
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Add your onTap logic here
+                    },
+                    child: SizedBox(
+                      width: 80,
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            medCat[index]['icon'],
+                            width: 70,
+                            height: 70,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            medCat[index]['Categories'],
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Config.spaceSmall,
+            const Text(
+              'Rendez-vous aujourd\'hui',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Config.spaceSmall,
+            const AppointmentCard(),
+            Config.spaceSmall,
+            const Text(
+              'Meilleur docteur',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            ListView.separated(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: _dataUtils.doctors.length,
+              separatorBuilder: (context, index) {
+                return const SizedBox(height: 10);
+              },
+              itemBuilder: (context, index) {
+                return DoctorCard(
+                  doctor: _dataUtils.doctors[index],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

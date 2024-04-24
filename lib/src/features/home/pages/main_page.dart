@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
       ),
       backgroundColor: Colors.white,
       bottomNavigationBar: SizedBox(
-        height: 80,
+        height: 100,
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
@@ -58,33 +58,33 @@ class _MainPageState extends State<MainPage> {
           items: firebaseAuthUtils.isAdmin
               ? [
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.home),
+                    icon: Icon(CupertinoIcons.home, size: 26),
                     label: "Home",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.calendar),
+                    icon: Icon(CupertinoIcons.calendar, size: 26),
                     label: "Schedule",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.chat_bubble_text_fill),
+                    icon: Icon(CupertinoIcons.chat_bubble_text_fill, size: 26),
                     label: "Messages",
                   ),
                 ]
               : [
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.home),
+                    icon: Icon(CupertinoIcons.home, size: 26),
                     label: "Home",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.calendar),
+                    icon: Icon(CupertinoIcons.calendar, size: 26),
                     label: "Schedule",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.chat_bubble_text_fill),
+                    icon: Icon(CupertinoIcons.chat_bubble_text_fill, size: 26),
                     label: "Messages",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.settings),
+                    icon: Icon(CupertinoIcons.settings, size: 26),
                     label: "Settings",
                   ),
                 ],

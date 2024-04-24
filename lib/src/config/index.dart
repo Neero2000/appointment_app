@@ -13,11 +13,13 @@ export '../features/splash/index.dart';
 
 // models
 export '../models/message.dart';
+export '../models/doctor_model.dart';
 
 // utils
 export '../utils/config.dart';
 export '../utils/text.dart';
 export '../utils/firebase_auth_utils.dart';
+export '../utils/data_utils.dart';
 
 // cubit
 // dart

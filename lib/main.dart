@@ -4,9 +4,13 @@ import 'package:flutter_application_1/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  // final client = StreamChatClient(
+  //   'b67pax5b2wdq',
+  //   logLevel: Level.INFO,
+  // );
+
   runApp(const MyApp());
 }
 
@@ -56,16 +60,16 @@ class MyApp extends StatelessWidget {
       //this is initial route of the app
       initialRoute: SplashPage.routeName,
       //which is auth page (log in and sing in )
-routes: {
+      routes: {
         SplashPage.routeName: (context) => const SplashPage(),
-        AuthPage.routeName: (context) => const AuthPage(),
+        LoginPage.routeName: (context) => const LoginPage(),
+        // this is for main layout after log in
         MainPage.routeName: (context) => const MainPage(),
         DoctorDetailsPage.routeName: (context) => const DoctorDetailsPage(),
         BookingPage.routeName: (context) => const BookingPage(),
         AppointmentBookedPage.routeName: (context) => const AppointmentBookedPage(),
-        RegisterPage.routeName: (context) => const RegisterPage(),
+        SignupPage.routeName: (context) => const SignupPage(),
         ChatPage.routeName: (context) => const ChatPage(),
-        'home_admin': (context) => const AdminPage(),
       },
     );
   }

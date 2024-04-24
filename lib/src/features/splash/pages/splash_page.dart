@@ -3,7 +3,7 @@ import '../../../config/index.dart';
 class SplashPage extends StatefulWidget {
   static const String routeName = '/';
 
-  const SplashPage({Key? key}) : super(key: key);
+  const SplashPage({super.key});
 
   @override
   State<SplashPage> createState() => _SplashPageState();
@@ -16,12 +16,12 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     // Delay the initialization of firebaseAuthUtils until after initState
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       firebaseAuthUtils = FirebaseAuthUtils();
       if (firebaseAuthUtils.isLoggedIn) {
         Navigator.pushReplacementNamed(context, MainPage.routeName);
       } else {
-        Navigator.pushReplacementNamed(context, AuthPage.routeName);
+        Navigator.pushReplacementNamed(context, LoginPage.routeName);
       }
     });
   }

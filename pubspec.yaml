@@ -1,5 +1,5 @@
 name: flutter_application_1
-description: "A new Flutter project."
+description: "Appointment app"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -28,19 +28,24 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  
+  # firebase & google
   firebase_auth: ^4.17.8
-  font_awesome_flutter: ^10.2.1
-  table_calendar: ^3.0.8
-  lottie: ^3.1.0
-  dio: ^5.4.1
-  rating_dialog: ^2.0.4
-  shared_preferences: ^2.0.15
-  provider: ^6.0.4
   firebase_core: ^2.27.0
-  firebase_core_platform_interface: ^5.0.0
-  fluttertoast: ^8.0.8
   cloud_firestore: ^4.15.8
+  firebase_core_platform_interface: ^5.0.0
+  stream_chat_flutter: ^7.2.0
+  # network
+  dio: ^5.4.1
+  dio_cache_interceptor: ^3.5.0
+  # state management & dir
+  shared_preferences: ^2.2.3
+  provider: ^6.1.2
+  # ui
+  font_awesome_flutter: ^10.2.1
+  table_calendar: ^3.1.1
+  lottie: ^3.1.0
+  rating_dialog: ^2.0.4
+  fluttertoast: ^8.2.5
 
   flutter:
     sdk: flutter
@@ -48,7 +53,7 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.8
 
 dev_dependencies:
   flutter_test:
@@ -59,13 +64,15 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^3.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
+  uses-material-design: true
+  generate: true
 
   assets:
      - assets/
