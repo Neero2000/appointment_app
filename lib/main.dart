@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'firebase_options.dart';
 
 import 'package:device_preview/device_preview.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as chat;
 
 /// this is the main function of flutter, this is where the app start
 Future<void> main() async {
@@ -12,7 +13,7 @@ Future<void> main() async {
 
   /// Initializes a new [FirebaseApp] instance by [options] and returns the created app.
   /// This method is called before any usage of FlutterFire plugins.
-  await Firebase.initializeApp(name: 'logo-quiz', options: DefaultFirebaseOptions.currentPlatform);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   /// Initialize firebase app check (play intergrity api)
   await FirebaseAppCheck.instance.activate(androidProvider: AndroidProvider.playIntegrity);
@@ -53,6 +54,16 @@ Future<void> main() async {
   ErrorWidget.builder = (FlutterErrorDetails details) {
     return CustomErrorWidget(errorText: details.exception.toString());
   };
+
+  final client = chat.StreamChatClient(
+    'b67pax5b2wdq',
+    logLevel: chat.Level.INFO,
+  );
+
+  await client.connectUser(
+    chat.User(id: 'tutorial-flutter'),
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoidHV0b3JpYWwtZmx1dHRlciJ9.S-MJpoSwDiqyXpUURgO5wVqJ4vKlIVFLSEyrFYCOE1c',
+  );
 
   /// this is the runApp function that runs our app from the root level (RootApp)
   runApp(const RootApp());

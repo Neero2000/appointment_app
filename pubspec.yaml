@@ -37,9 +37,11 @@ dependencies:
   firebase_crashlytics: ^3.4.19
   firebase_messaging: ^14.7.20
   cloud_firestore: ^4.17.2
+  stream_chat_flutter: ^7.2.0-hotfix.1
   # network
   dio: ^5.4.1
   dio_cache_interceptor: ^3.5.0
+  connectivity_plus: ^5.0.2
   # state management & dir
   shared_preferences: ^2.2.3
   provider: ^6.1.2
@@ -90,7 +92,7 @@ flutter:
   assets:
      - assets/
      - assets/images/
-     - assets/images/flags_icons
+     - assets/images/flags_icons/
      - assets/l10n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
