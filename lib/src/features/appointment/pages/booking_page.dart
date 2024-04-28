@@ -100,7 +100,7 @@ class _BookingPageState extends State<BookingPage> {
                 width: double.infinity,
                 title: 'Confirmer',
                 onPressed: () {
-                  Navigator.of(context).pushNamed('succes_booked');
+                  Navigator.of(context).pushNamed(PaymentMethodScreen.routeName);
                 },
                 disable: _timeSelected && _dateSelected ? false : true,
               ),
