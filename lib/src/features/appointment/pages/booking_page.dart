@@ -53,7 +53,8 @@ class _BookingPageState extends State<BookingPage> {
           _isWeekend
               ? SliverToBoxAdapter(
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 30),
                     alignment: Alignment.center,
                     child: const Text(
                       'Weekend is not available,please select another date',
@@ -79,9 +80,14 @@ class _BookingPageState extends State<BookingPage> {
                       child: Container(
                         margin: const EdgeInsets.all(5),
                         decoration: BoxDecoration(
-                          border: Border.all(color: _currentIndex == index ? Colors.white : Colors.black),
+                          border: Border.all(
+                              color: _currentIndex == index
+                                  ? Colors.white
+                                  : Colors.black),
                           borderRadius: BorderRadius.circular(15),
-                          color: _currentIndex == index ? Config.primaryColor : null,
+                          color: _currentIndex == index
+                              ? Config.primaryColor
+                              : null,
                         ),
                         alignment: Alignment.center,
                         child: Text(
@@ -94,7 +100,8 @@ class _BookingPageState extends State<BookingPage> {
                       ),
                     );
                   }, childCount: 8),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4, childAspectRatio: 1.5)),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4, childAspectRatio: 1.5)),
           SliverToBoxAdapter(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 80),
@@ -102,7 +109,8 @@ class _BookingPageState extends State<BookingPage> {
                 width: double.infinity,
                 title: 'Confirmer',
                 onPressed: () {
-                  Navigator.of(context).pushNamed('succes_booked');
+                  Navigator.of(context)
+                      .pushNamed(PaymentMethodScreen.routeName);
                 },
                 disable: _timeSelected && _dateSelected ? false : true,
               ),

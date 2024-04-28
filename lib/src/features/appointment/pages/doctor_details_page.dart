@@ -10,7 +10,8 @@ class DoctorDetailsPage extends StatelessWidget {
   const DoctorDetailsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    final DoctorDetailsArgs args = ModalRoute.of(context)?.settings.arguments as DoctorDetailsArgs;
+    final DoctorDetailsArgs args =
+        ModalRoute.of(context)?.settings.arguments as DoctorDetailsArgs;
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Doctor Details',
@@ -31,7 +32,7 @@ class DoctorDetailsPage extends StatelessWidget {
                 title: 'Prendre rendez-vous',
                 onPressed: () {
                   // Add your logic for handling the button press here
-                  Navigator.of(context).pushNamed('booking_page');
+                  Navigator.of(context).pushNamed(BookingPage.routeName);
                 },
                 disable: false, // Provide a valid value for 'disable' parameter
               ),
@@ -83,9 +84,12 @@ class AboutDoctor extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _buildInfoCard('assets/doc1.png', 'Patients ${doctor.patientNumber}'),
-              _buildInfoCard('assets/doc2.png', 'Experience +${doctor.experience}'),
-              _buildInfoCard('assets/doc3.png', 'Notation +${doctor.notation.toStringAsFixed(1)}'),
+              _buildInfoCard(
+                  'assets/doc1.png', 'Patients ${doctor.patientNumber}'),
+              _buildInfoCard(
+                  'assets/doc2.png', 'Experience +${doctor.experience}'),
+              _buildInfoCard('assets/doc3.png',
+                  'Notation +${doctor.notation.toStringAsFixed(1)}'),
             ],
           ),
           const SizedBox(height: 16),

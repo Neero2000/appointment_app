@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
         ).copyWith(
           selectedItemColor: Config.primaryColor,
           selectedIconTheme: IconThemeData(
-            color: Config.primaryColor,
+            color: const Color.fromARGB(255, 219, 219, 219),
             size: 24.0,
             // Add shadow when icon is selected
             shadows: [
@@ -67,9 +67,11 @@ class MyApp extends StatelessWidget {
         MainPage.routeName: (context) => const MainPage(),
         DoctorDetailsPage.routeName: (context) => const DoctorDetailsPage(),
         BookingPage.routeName: (context) => const BookingPage(),
-        AppointmentBookedPage.routeName: (context) => const AppointmentBookedPage(),
+        AppointmentBookedPage.routeName: (context) =>
+            const AppointmentBookedPage(),
         SignupPage.routeName: (context) => const SignupPage(),
         ChatPage.routeName: (context) => const ChatPage(),
+        PaymentMethodScreen.routeName: (context) => const PaymentMethodScreen(),
       },
     );
   }
