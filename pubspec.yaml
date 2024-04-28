@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.1 <4.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -29,27 +29,40 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   # firebase & google
-  firebase_auth: ^4.17.8
-  firebase_core: ^2.27.0
-  cloud_firestore: ^4.15.8
-  firebase_core_platform_interface: ^5.0.0
-  stream_chat_flutter: ^7.2.0
+  firebase_core: ^2.27.1
+  firebase_analytics: ^10.8.10
+  firebase_app_check: ^0.2.1+18
+  firebase_auth: ^4.17.9
+  firebase_performance: ^0.9.3+18
+  firebase_crashlytics: ^3.4.19
+  firebase_messaging: ^14.7.20
+  cloud_firestore: ^4.17.2
   # network
   dio: ^5.4.1
   dio_cache_interceptor: ^3.5.0
   # state management & dir
   shared_preferences: ^2.2.3
   provider: ^6.1.2
+  flutter_bloc: ^8.1.4
+  # device
+  flutter_local_notifications: ^17.0.0
+  device_info_plus: ^10.0.1
+  package_info_plus: ^6.0.0
+  device_preview: ^1.1.0
+  # deep links
+  uni_links: ^0.5.1
   # ui
   font_awesome_flutter: ^10.2.1
-  table_calendar: ^3.1.1
+  # table_calendar: ^3.1.1
   lottie: ^3.1.0
   rating_dialog: ^2.0.4
   fluttertoast: ^8.2.5
 
   flutter:
     sdk: flutter
-  
+  flutter_localizations:
+    sdk: flutter
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -76,6 +89,9 @@ flutter:
 
   assets:
      - assets/
+     - assets/images/
+     - assets/images/flags_icons
+     - assets/l10n/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

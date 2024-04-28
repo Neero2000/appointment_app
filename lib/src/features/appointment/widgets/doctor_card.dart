@@ -19,7 +19,7 @@ class DoctorCard extends StatelessWidget {
             children: [
               const SizedBox(width: 6),
               SizedBox(
-                width: Config.screenWidth! * 0.33,
+                width: 33.w,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.asset(
@@ -77,7 +77,7 @@ class DoctorCard extends StatelessWidget {
             DoctorDetailsPage.routeName,
             arguments: DoctorDetailsArgs(doctor: doctor),
           );
-        }, //redirect to doctor details
+        },
       ),
     );
   }

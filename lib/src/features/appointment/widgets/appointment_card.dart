@@ -13,7 +13,7 @@ class _AppointmentCardState extends State<AppointmentCard> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Config.primaryColor,
+        color: AppTheme.primaryColor,
         borderRadius: BorderRadius.circular(25),
       ),
       child: Material(
@@ -58,9 +58,9 @@ class _AppointmentCardState extends State<AppointmentCard> {
                   ),
                 ],
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               const _ScheduleCard(),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -103,7 +103,6 @@ class _AppointmentCardState extends State<AppointmentCard> {
 
 class _ScheduleCard extends StatelessWidget {
   const _ScheduleCard({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,7 +116,7 @@ class _ScheduleCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Icon(
-            FontAwesomeIcons.calendarAlt, // Use FontAwesome icon
+            FontAwesomeIcons.calendarDays,
             color: Colors.white,
             size: 15,
           ),

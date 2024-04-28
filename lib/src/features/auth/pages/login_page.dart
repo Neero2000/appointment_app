@@ -1,7 +1,7 @@
 import '../../../config/index.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String routeName = '/login_page';
+  static const String path = '/login';
   const LoginPage({super.key});
   @override
   State<LoginPage> createState() => LoginPageState();
@@ -11,6 +11,7 @@ class LoginPageState extends State<LoginPage> {
   FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils();
   @override
   Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
@@ -32,7 +33,7 @@ class LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               Text(
                 AppText.enText['after_welcome']!,
                 style: const TextStyle(
@@ -40,19 +41,19 @@ class LoginPageState extends State<LoginPage> {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               LoginForm(
                 onLogin: (String email, String password) async {
                   await firebaseAuthUtils.login(
                     email: email,
                     password: password,
                     onSuccess: () {
-                      Navigator.of(context).pushReplacementNamed(MainPage.routeName);
+                      router.launchHome();
                     },
                   );
                 },
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               const Spacer(),
               const Text(
                 "Connexion avec social media",
@@ -62,8 +63,7 @@ class LoginPageState extends State<LoginPage> {
                   color: Color(0xFF6B7280),
                 ),
               ),
-              Config.spaceSmall,
-              Config.spaceSmall,
+              const SizedBox(height: 50),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
@@ -71,10 +71,10 @@ class LoginPageState extends State<LoginPage> {
                   SocialButton(social: 'facebook'),
                 ],
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed(SignupPage.routeName);
+                  router.launchSignup();
                 },
                 child: const Text(
                   'Sign up',

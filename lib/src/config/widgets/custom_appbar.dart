@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/utils/config.dart';
+import '../index.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -44,7 +43,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Config.primaryColor,
+                color: AppTheme.primaryColor,
               ),
               child: IconButton(
                 onPressed: () {

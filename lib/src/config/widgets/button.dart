@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/utils/config.dart';
+import '../index.dart';
 
 class Button extends StatelessWidget {
   const Button({
@@ -21,7 +20,7 @@ class Button extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Config.primaryColor,
+          backgroundColor: AppTheme.primaryColor,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24), // Adjust padding here
         ),

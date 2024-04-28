@@ -1,7 +1,7 @@
 import '../../../config/index.dart';
 
 class ChatPage extends StatefulWidget {
-  static const String routeName = '/chat_page';
+  static const String path = '/chat';
   const ChatPage({super.key, String? userEmail});
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -22,13 +22,13 @@ class _ChatPageState extends State<ChatPage> {
       stream: messages.orderBy('createdAt', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Message> messagesList = [];
+          List<MessageModel> messagesList = [];
           for (int i = 0; i < snapshot.data!.docs.length; i++) {
-            messagesList.add(Message.fromJson(snapshot.data!.docs[i]));
+            // messagesList.add(Message.fromJson(snapshot.data!.docs[i]));
           }
           return Scaffold(
             appBar: AppBar(
-              backgroundColor: Config.primaryColor,
+              backgroundColor: AppTheme.primaryColor,
               title: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -49,11 +49,13 @@ class _ChatPageState extends State<ChatPage> {
                     controller: _controller,
                     itemCount: messagesList.length,
                     itemBuilder: (context, index) {
-                      return messagesList[index].id == email
-                          ? ChatBubble(
-                              message: messagesList[index],
-                            )
-                          : ChatBubbleForFriend(message: messagesList[index]);
+                      return null;
+
+                      // return messagesList[index].id == email
+                      //     ? ChatBubble(
+                      //         message: messagesList[index],
+                      //       )
+                      //     : ChatBubbleForFriend(message: messagesList[index]);
                     },
                   ),
                 ),
@@ -74,13 +76,13 @@ class _ChatPageState extends State<ChatPage> {
                       hintText: 'Send Message',
                       suffixIcon: const Icon(
                         Icons.send,
-                        color: Config.primaryColor,
+                        color: AppTheme.primaryColor,
                       ),
                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: const BorderSide(
-                          color: Config.primaryColor,
+                          color: AppTheme.primaryColor,
                         ),
                       ),
                     ),

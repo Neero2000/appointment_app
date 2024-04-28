@@ -62,7 +62,7 @@ class AboutDoctor extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Config.spaceMedium,
+          SizedBox(height: 5.h),
           Text(
             doctor.name,
             style: const TextStyle(
@@ -79,7 +79,7 @@ class AboutDoctor extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          Config.spaceMedium,
+          SizedBox(height: 5.h),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

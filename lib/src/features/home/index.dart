@@ -1,5 +1,5 @@
 // pages
-export 'pages/home_admin.dart';
+export 'pages/admin_home_page.dart';
+export 'pages/client_home_page.dart';
+export 'pages/notifications_page.dart';
 export 'pages/home_page.dart';
-export 'pages/notification_page.dart';
-export 'pages/main_page.dart';

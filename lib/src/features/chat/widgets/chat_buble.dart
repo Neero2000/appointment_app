@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/models/message.dart';
-import 'package:flutter_application_1/src/utils/config.dart';
+import '../../../config/index.dart';
 
 class ChatBubble extends StatelessWidget {
   const ChatBubble({super.key, required this.message});
-  final Message message;
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +17,7 @@ class ChatBubble extends StatelessWidget {
             topRight: Radius.circular(32),
             bottomRight: Radius.circular(32),
           ),
-          color: Config.primaryColor,
+          color: AppTheme.primaryColor,
         ),
         child: Text(
           message.message,
@@ -34,7 +32,7 @@ class ChatBubble extends StatelessWidget {
 
 class ChatBubbleForFriend extends StatelessWidget {
   const ChatBubbleForFriend({super.key, required this.message});
-  final Message message;
+  final MessageModel message;
 
   @override
   Widget build(BuildContext context) {

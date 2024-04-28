@@ -1,7 +1,7 @@
 import '../../../config/index.dart';
 
 class SignupPage extends StatefulWidget {
-  static const String routeName = '/signup_page';
+  static const String path = '/signup';
   const SignupPage({super.key});
   @override
   State<SignupPage> createState() => SignupPageState();
@@ -10,7 +10,6 @@ class SignupPage extends StatefulWidget {
 class SignupPageState extends State<SignupPage> {
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
     final welcomeText = AppText.enText['welcome_text'] ?? '';
     final afterWelcomeText = AppText.enText['after_welcome'] ?? '';
     final haveAccText = AppText.enText['have_acc'] ?? '';
@@ -39,7 +38,7 @@ class SignupPageState extends State<SignupPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
               Text(
                 afterWelcomeText,
                 style: const TextStyle(
@@ -47,11 +46,9 @@ class SignupPageState extends State<SignupPage> {
                   fontWeight: FontWeight.normal,
                 ),
               ),
-              Config.spaceSmall,
-              RegisterForm(
-                onRegister: registerUser,
-              ),
-              Config.spaceSmall,
+              const SizedBox(height: 25),
+              RegisterForm(onRegister: registerUser),
+              const SizedBox(height: 25),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

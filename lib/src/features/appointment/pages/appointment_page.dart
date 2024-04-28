@@ -71,7 +71,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Config.spaceSmall,
+            const SizedBox(height: 25),
             Stack(
               children: [
                 Container(
@@ -117,7 +117,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                     width: 100,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Config.primaryColor,
+                      color: AppTheme.primaryColor,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Center(
@@ -129,7 +129,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                 )
               ],
             ),
-            Config.spaceSmall,
+            const SizedBox(height: 25),
             Expanded(
                 child: ListView.builder(
                     itemCount: filteredSchedules.length,
@@ -201,7 +201,7 @@ class _AppointmentPageState extends State<AppointmentPage> {
                                   Expanded(
                                     child: OutlinedButton(
                                       style: OutlinedButton.styleFrom(
-                                        backgroundColor: Config.primaryColor,
+                                        backgroundColor: AppTheme.primaryColor,
                                       ),
                                       onPressed: () {},
                                       child: const Text(

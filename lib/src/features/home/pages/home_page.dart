@@ -2,175 +2,91 @@ import '../../../config/index.dart';
 import 'package:flutter/cupertino.dart';
 
 class HomePage extends StatefulWidget {
+  static const String path = '/home';
   const HomePage({super.key});
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<String, dynamic>> medCat = [
-    {
-      "icon": 'assets/a.png',
-      "Categories": "General",
-    },
-    {
-      "icon": 'assets/b.png',
-      "Categories": "Cardiology",
-    },
-    {
-      "icon": 'assets/c.png',
-      "Categories": "Immunology",
-    },
-    {
-      "icon": 'assets/d.png',
-      "Categories": "Pulmonologist",
-    },
-    {
-      "icon": 'assets/e.png',
-      "Categories": "Ophthalmology",
-    },
-    {
-      "icon": 'assets/f.png',
-      "Categories": "Dentistry",
-    },
-  ];
-
-  late String userFirstName;
-
-  final DataUtils _dataUtils = DataUtils();
-
-  @override
-  void initState() {
-    super.initState();
-    getUserFirstName();
-  }
-
-  void getUserFirstName() {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      setState(() {
-        String email = user.email!;
-        userFirstName = email.split('@')[0]; // Extracting the first part of the email
-      });
-    }
-  }
+  int _selectedIndex = 0;
+  final PageController _pageController = PageController();
+  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils();
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          userFirstName,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        centerTitle: false,
-        actions: [
-          CupertinoButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const NotificationPage(),
-                ),
-              );
-            },
-            child: const Icon(
-              CupertinoIcons.bell,
-              size: 30,
-            ),
-          ),
-        ],
+      body: PageView(
+        onPageChanged: ((value) {
+          setState(() {
+            _selectedIndex = value;
+          });
+        }),
+        children: _firebaseAuthUtils.isAdmin
+            ? [
+                const AdminHomePage(),
+                const AppointmentPage(),
+                const ChatPage(),
+              ]
+            : [
+                const ClientHomePage(),
+                const AppointmentPage(),
+                const ChatPage(),
+                const ProfilePage(),
+              ],
       ),
-      body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.only(left: 18, right: 18, bottom: 70, top: 24),
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          children: <Widget>[
-            const Text(
-              'Categories',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Config.spaceSmall,
-            SizedBox(
-              height: 100,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: medCat.length,
-                separatorBuilder: (context, index) {
-                  return const SizedBox(width: 12);
-                },
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Add your onTap logic here
-                    },
-                    child: SizedBox(
-                      width: 80,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            medCat[index]['icon'],
-                            width: 70,
-                            height: 70,
-                            fit: BoxFit.cover,
-                          ),
-                          const SizedBox(height: 6),
-                          Text(
-                            medCat[index]['Categories'],
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Config.spaceSmall,
-            const Text(
-              'Rendez-vous aujourd\'hui',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Config.spaceSmall,
-            const AppointmentCard(),
-            Config.spaceSmall,
-            const Text(
-              'Meilleur docteur',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _dataUtils.doctors.length,
-              separatorBuilder: (context, index) {
-                return const SizedBox(height: 10);
-              },
-              itemBuilder: (context, index) {
-                return DoctorCard(
-                  doctor: _dataUtils.doctors[index],
-                );
-              },
-            ),
-          ],
+      backgroundColor: Colors.white,
+      bottomNavigationBar: SizedBox(
+        height: 100,
+        child: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: const Color(0xFF7165D6),
+          unselectedItemColor: Colors.black26,
+          selectedLabelStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+          currentIndex: _selectedIndex,
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          },
+          items: _firebaseAuthUtils.isAdmin
+              ? [
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.home, size: 26),
+                    label: "Home",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.calendar, size: 26),
+                    label: "Schedule",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.chat_bubble_text_fill, size: 26),
+                    label: "Messages",
+                  ),
+                ]
+              : [
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.home, size: 26),
+                    label: "Home",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.calendar, size: 26),
+                    label: "Schedule",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.chat_bubble_text_fill, size: 26),
+                    label: "Messages",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.settings, size: 26),
+                    label: "Settings",
+                  ),
+                ],
         ),
       ),
     );

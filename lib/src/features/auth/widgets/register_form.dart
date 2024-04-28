@@ -29,7 +29,7 @@ class _RegisterFormState extends State<RegisterForm> {
           TextFormField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
-            cursorColor: Config.primaryColor,
+            cursorColor: AppTheme.primaryColor,
             decoration: const InputDecoration(
               hintText: 'Email Address',
               labelText: 'Email',
@@ -44,11 +44,11 @@ class _RegisterFormState extends State<RegisterForm> {
               return null;
             },
           ),
-          Config.spaceSmall,
+          const SizedBox(height: 25),
           TextFormField(
             controller: _passController,
             keyboardType: TextInputType.visiblePassword,
-            cursorColor: Config.primaryColor,
+            cursorColor: AppTheme.primaryColor,
             obscureText: obsecurePass,
             decoration: InputDecoration(
               hintText: 'Password',
@@ -69,7 +69,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       )
                     : const Icon(
                         FontAwesomeIcons.eye,
-                        color: Config.primaryColor,
+                        color: AppTheme.primaryColor,
                       ),
               ),
             ),
@@ -80,11 +80,11 @@ class _RegisterFormState extends State<RegisterForm> {
               return null;
             },
           ),
-          Config.spaceSmall,
+          const SizedBox(height: 25),
           TextFormField(
             controller: _confirmPassController,
             keyboardType: TextInputType.visiblePassword,
-            cursorColor: Config.primaryColor,
+            cursorColor: AppTheme.primaryColor,
             obscureText: obsecurePass,
             decoration: InputDecoration(
               hintText: 'Confirm Password',
@@ -105,7 +105,7 @@ class _RegisterFormState extends State<RegisterForm> {
                       )
                     : const Icon(
                         FontAwesomeIcons.eye,
-                        color: Config.primaryColor,
+                        color: AppTheme.primaryColor,
                       ),
               ),
             ),
@@ -118,8 +118,7 @@ class _RegisterFormState extends State<RegisterForm> {
               return null;
             },
           ),
-          Config.spaceSmall,
-          // Register Button
+          const SizedBox(height: 25),
           Button(
             width: double.infinity,
             title: 'Register',

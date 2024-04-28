@@ -9,17 +9,15 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   // Declaration
-  CalendarFormat _format = CalendarFormat.month;
-  DateTime _focusDay = DateTime.now();
-  DateTime _currentDay = DateTime.now();
+  final DateTime _focusDay = DateTime.now();
+  final DateTime _currentDay = DateTime.now();
   int? _currentIndex; // Declaring _currentIndex here
-  bool _isWeekend = false;
-  bool _dateSelected = false;
+  final bool _isWeekend = false;
+  final bool _dateSelected = false;
   bool _timeSelected = false;
 
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
     return Scaffold(
       appBar: const CustomAppBar(
         appTitle: 'Appointment',
@@ -27,12 +25,12 @@ class _BookingPageState extends State<BookingPage> {
       ),
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Column(
               children: <Widget>[
                 // Display table of calendar here
-                _tableCalendar(),
-                const Padding(
+                // _tableCalendar(),
+                Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 10,
                     vertical: 25,
@@ -81,7 +79,7 @@ class _BookingPageState extends State<BookingPage> {
                         decoration: BoxDecoration(
                           border: Border.all(color: _currentIndex == index ? Colors.white : Colors.black),
                           borderRadius: BorderRadius.circular(15),
-                          color: _currentIndex == index ? Config.primaryColor : null,
+                          color: _currentIndex == index ? AppTheme.primaryColor : null,
                         ),
                         alignment: Alignment.center,
                         child: Text(
@@ -113,49 +111,49 @@ class _BookingPageState extends State<BookingPage> {
     );
   }
 
-  Widget _tableCalendar() {
-    return TableCalendar(
-      focusedDay: _focusDay,
-      firstDay: DateTime.now(),
-      lastDay: DateTime(2024, 12, 31),
-      calendarFormat: _format,
-      currentDay: _currentDay,
-      rowHeight: 48,
-      calendarStyle: const CalendarStyle(
-        todayDecoration: BoxDecoration(
-          color: Config.primaryColor,
-          shape: BoxShape.circle,
-        ),
-      ),
-      availableCalendarFormats: const {
-        CalendarFormat.month: 'Month',
-      },
-      headerStyle: const HeaderStyle(
-        titleCentered: true,
-        formatButtonVisible: false,
-        leftChevronIcon: FaIcon(FontAwesomeIcons.chevronLeft),
-        rightChevronIcon: FaIcon(FontAwesomeIcons.chevronRight),
-      ),
-      onFormatChanged: (format) {
-        setState(() {
-          _format = format;
-        });
-      },
-      onDaySelected: (selectedDay, focusedDay) {
-        setState(() {
-          _currentDay = selectedDay;
-          _focusDay = focusedDay;
-          _dateSelected = true;
-          // Check if weekend is selected
-          if (selectedDay.weekday == 6 || selectedDay.weekday == 7) {
-            _isWeekend = true;
-            _timeSelected = false;
-          } else {
-            _isWeekend = false;
-          }
-        });
-      },
-    );
-  }
+  // Widget _tableCalendar() {
+  //   return TableCalendar(
+  //     focusedDay: _focusDay,
+  //     firstDay: DateTime.now(),
+  //     lastDay: DateTime(2024, 12, 31),
+  //     calendarFormat: _format,
+  //     currentDay: _currentDay,
+  //     rowHeight: 48,
+  //     calendarStyle: const CalendarStyle(
+  //       todayDecoration: BoxDecoration(
+  //         color: Config.primaryColor,
+  //         shape: BoxShape.circle,
+  //       ),
+  //     ),
+  //     availableCalendarFormats: const {
+  //       CalendarFormat.month: 'Month',
+  //     },
+  //     headerStyle: const HeaderStyle(
+  //       titleCentered: true,
+  //       formatButtonVisible: false,
+  //       leftChevronIcon: FaIcon(FontAwesomeIcons.chevronLeft),
+  //       rightChevronIcon: FaIcon(FontAwesomeIcons.chevronRight),
+  //     ),
+  //     onFormatChanged: (format) {
+  //       setState(() {
+  //         _format = format;
+  //       });
+  //     },
+  //     onDaySelected: (selectedDay, focusedDay) {
+  //       setState(() {
+  //         _currentDay = selectedDay;
+  //         _focusDay = focusedDay;
+  //         _dateSelected = true;
+  //         // Check if weekend is selected
+  //         if (selectedDay.weekday == 6 || selectedDay.weekday == 7) {
+  //           _isWeekend = true;
+  //           _timeSelected = false;
+  //         } else {
+  //           _isWeekend = false;
+  //         }
+  //       });
+  //     },
+  //   );
+  // }
 }
 //

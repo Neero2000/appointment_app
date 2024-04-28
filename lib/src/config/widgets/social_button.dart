@@ -1,17 +1,15 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/src/utils/config.dart';
+import '../index.dart';
 
 class SocialButton extends StatelessWidget {
   const SocialButton({super.key, required this.social});
   final String social;
   @override
   Widget build(BuildContext context) {
-    Config().init(context);
     return OutlinedButton(
       style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 15), side: const BorderSide(width: 1, color: Colors.black)),
       onPressed: () {},
       child: SizedBox(
-          width: Config.widthSize * 0.4,
+          width: 40.w,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[

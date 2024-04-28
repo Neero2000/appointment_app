@@ -7,13 +7,13 @@ class AppTheme {
   }
   AppTheme._internal();
 
-  static const Color lightBlueColor = Color(0xFFbaefee);
+  static const Color primaryColor = Color(0xFF1C2A3A);
   static const Color successGreen = Color(0xFF009944);
   static const Color errorRed = Color(0xFFcf000f);
 
   /// other
   final AppBarTheme _appBarTheme = const AppBarTheme(
-    backgroundColor: lightBlueColor,
+    backgroundColor: primaryColor,
     actionsIconTheme: IconThemeData(color: Colors.black),
     elevation: 0,
   );
@@ -57,7 +57,7 @@ class AppTheme {
   ThemeData get themeData => ThemeData(
         colorScheme: _colorScheme,
         appBarTheme: _appBarTheme,
-        scaffoldBackgroundColor: lightBlueColor,
+        scaffoldBackgroundColor: primaryColor,
         textTheme: _textTheme,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
