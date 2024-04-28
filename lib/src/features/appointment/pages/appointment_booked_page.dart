@@ -6,6 +6,7 @@ class AppointmentBookedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -40,8 +41,9 @@ class AppointmentBookedPage extends StatelessWidget {
               child: Button(
                   width: double.infinity,
                   title: "Terminé",
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed(MainPage.routeName),
+                  onPressed: () {
+                    router.launchHome();
+                  },
                   disable: false),
             )
           ],
