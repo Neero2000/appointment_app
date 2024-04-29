@@ -9,8 +9,6 @@ class BookingPage extends StatefulWidget {
 
 class _BookingPageState extends State<BookingPage> {
   // Declaration
-  final DateTime _focusDay = DateTime.now();
-  final DateTime _currentDay = DateTime.now();
   int? _currentIndex; // Declaring _currentIndex here
   final bool _isWeekend = false;
   final bool _dateSelected = false;

@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        controller: _pageController,
         onPageChanged: ((value) {
           setState(() {
             _selectedIndex = value;

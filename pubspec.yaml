@@ -44,7 +44,6 @@ dependencies:
   connectivity_plus: ^5.0.2
   # state management & dir
   shared_preferences: ^2.2.3
-  provider: ^6.1.2
   flutter_bloc: ^8.1.4
   # device
   flutter_local_notifications: ^17.0.0

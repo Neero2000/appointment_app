@@ -13,7 +13,7 @@ class AppTheme {
 
   /// other
   final AppBarTheme _appBarTheme = const AppBarTheme(
-    backgroundColor: primaryColor,
+    backgroundColor: Colors.white,
     actionsIconTheme: IconThemeData(color: Colors.black),
     elevation: 0,
   );
@@ -57,7 +57,7 @@ class AppTheme {
   ThemeData get themeData => ThemeData(
         colorScheme: _colorScheme,
         appBarTheme: _appBarTheme,
-        scaffoldBackgroundColor: primaryColor,
+        scaffoldBackgroundColor: Colors.white,
         textTheme: _textTheme,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

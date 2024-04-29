@@ -9,21 +9,31 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late FirebaseAuthUtils firebaseAuthUtils;
+  late final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils();
+
+  bool _initialized = false;
 
   @override
   void initState() {
+    _init();
     super.initState();
-    // Delay the initialization of firebaseAuthUtils until after initState
+  }
+
+  void _init() {
     final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      firebaseAuthUtils = FirebaseAuthUtils();
-      if (firebaseAuthUtils.isLoggedIn) {
-        router.launchHome();
-      } else {
-        router.launchLogin();
-      }
-    });
+    Future.delayed(
+      const Duration(milliseconds: 2000),
+      () async {
+        if (!_initialized) {
+          _initialized = true;
+          if (_firebaseAuthUtils.isLoggedIn) {
+            router.launchHome();
+          } else {
+            router.launchLogin();
+          }
+        }
+      },
+    );
   }
 
   @override

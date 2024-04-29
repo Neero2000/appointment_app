@@ -8,10 +8,10 @@ class ConfigUtils {
   //* General Config *//
 
   // title of the app
-  final String appTitle = 'Logo Quiz';
+  final String appTitle = 'Doctor Appointment';
 
   // deep link prefix (ex: deeplinks://logoquiz)
-  final String deepLinksPrefix = "logoquiz";
+  final String deepLinksPrefix = "doctorappointment";
 
   /// list of app langugages (add or remove language configuration)
   final List<AppLangModel> appLangs = [
@@ -30,4 +30,10 @@ class ConfigUtils {
       assetPath: 'assets/images/flags_icons/fr.svg',
     ),
   ];
+
+  // stream chat api key
+  final String streamChatApiKey = "nhezh6ax8hxt";
+
+  // stream chat secret
+  final String streamChatSecret = "8wp7btkdnycs42796tmyzz9qbw6xs692yyp5z3ehuk5uw73yt5c38skuc8egagjv";
 }
