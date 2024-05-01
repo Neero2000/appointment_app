@@ -6,16 +6,20 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? backCallback;
   final bool showTrailing;
   final Widget? trailing;
+  final bool addBackButton;
+  final Widget? bottom;
   const CustomAppBar({
     super.key,
     required this.title,
     this.backCallback,
     this.showTrailing = true,
     this.trailing,
+    this.addBackButton = true,
+    this.bottom,
   });
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => Size.fromHeight(bottom != null ? (kToolbarHeight * 2) : kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: false,
       centerTitle: true,
       title: _Title(title: title),
-      leading: _Back(backCallback: backCallback),
+      leading: addBackButton ? _Back(backCallback: backCallback) : null,
       actions: [
         ...showTrailing
             ? [
@@ -32,6 +36,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               ]
             : [],
       ],
+      bottom: bottom != null
+          ? PreferredSize(
+              preferredSize: preferredSize,
+              child: bottom!,
+            )
+          : null,
     );
   }
 }

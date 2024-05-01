@@ -6,16 +6,30 @@ class AppointmentsPage extends StatefulWidget {
   State<AppointmentsPage> createState() => _AppointmentsPageState();
 }
 
-class _AppointmentsPageState extends State<AppointmentsPage> {
+class _AppointmentsPageState extends State<AppointmentsPage> with SingleTickerProviderStateMixin {
   final FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
   final FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils.instance;
+
+  late TabController _tabController;
+  final List<String> _statuses = [
+    "started",
+    "pending",
+    "completed",
+  ];
 
   final List<AppointmentModel> _appointments = [];
 
   @override
   void initState() {
+    _tabController = TabController(length: 3, vsync: this);
     _fetchAppointments();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
   }
 
   Future _fetchAppointments() async {
@@ -28,168 +42,143 @@ class _AppointmentsPageState extends State<AppointmentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 20, top: 20, right: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Mes réservations',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 25),
-            Stack(
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      //this is for filter taps
-                      // for (FilterStatus filterStatus in FilterStatus.values)
-                      //   Expanded(
-                      //     child: GestureDetector(
-                      //       onTap: () {
-                      //         setState(() {
-                      //           if (filterStatus == FilterStatus.upcoming) {
-                      //             status = FilterStatus.upcoming;
-                      //             _alignment = Alignment.centerLeft;
-                      //           } else if (filterStatus == FilterStatus.complete) {
-                      //             status = FilterStatus.complete;
-                      //             _alignment = Alignment.center;
-                      //           } else if (filterStatus == FilterStatus.cancel) {
-                      //             status = FilterStatus.cancel;
-                      //             _alignment = Alignment.centerRight;
-                      //           }
-                      //         });
-                      //       },
-                      //       child: Center(
-                      //         child: Text(filterStatus.name),
-                      //       ),
-                      //     ),
-                      //   ),
-                    ],
-                  ),
-                ),
-                AnimatedAlign(
-                  alignment: Alignment.center,
-                  duration: const Duration(milliseconds: 150),
-                  child: Container(
-                    width: 100,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primaryColor,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                        child: Text(
-                      'status.name',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                    )),
-                  ),
-                )
-              ],
-            ),
-            const SizedBox(height: 25),
-            // Expanded(
-            //     child: ListView.builder(
-            //         itemCount: filteredSchedules.length,
-            //         itemBuilder: ((context, index) {
-            //           var schedule = filteredSchedules[index];
-            //           bool isLastElement = filteredSchedules.length + 1 == index;
-            //           return Card(
-            //             shape: RoundedRectangleBorder(
-            //               side: const BorderSide(
-            //                 color: Colors.grey,
-            //               ),
-            //               borderRadius: BorderRadius.circular(20),
-            //             ),
-            //             margin: !isLastElement ? const EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
-            //             child: Padding(
-            //               padding: const EdgeInsets.all(15),
-            //               child: Column(
-            //                 crossAxisAlignment: CrossAxisAlignment.stretch,
-            //                 children: [
-            //                   Row(
-            //                     children: [
-            //                       CircleAvatar(
-            //                         backgroundImage: AssetImage(schedule['doctor_profile']),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 10,
-            //                       ),
-            //                       Column(
-            //                         crossAxisAlignment: CrossAxisAlignment.start,
-            //                         children: [
-            //                           Text(
-            //                             schedule['doctor_name'],
-            //                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-            //                           ),
-            //                           const SizedBox(
-            //                             height: 5,
-            //                           ),
-            //                           Text(
-            //                             schedule['category'],
-            //                             style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w600),
-            //                           )
-            //                         ],
-            //                       )
-            //                     ],
-            //                   ),
-            //                   const SizedBox(
-            //                     height: 15,
-            //                   ),
-            //                   //schedule Card
-            //                   const ScheduleCard(),
-            //                   const SizedBox(
-            //                     height: 15,
-            //                   ),
-            //                   Row(
-            //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                     children: [
-            //                       Expanded(
-            //                         child: OutlinedButton(
-            //                           onPressed: () {},
-            //                           child: const Text(
-            //                             'Cancel',
-            //                             style: TextStyle(color: Colors.black),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                       const SizedBox(
-            //                         width: 20,
-            //                       ),
-            //                       Expanded(
-            //                         child: OutlinedButton(
-            //                           style: OutlinedButton.styleFrom(
-            //                             backgroundColor: AppTheme.primaryColor,
-            //                           ),
-            //                           onPressed: () {},
-            //                           child: const Text(
-            //                             'Reschedule',
-            //                             style: TextStyle(color: Colors.white),
-            //                           ),
-            //                         ),
-            //                       ),
-            //                     ],
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           );
-            //         })))
-          ],
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'My appointments',
+        addBackButton: false,
+        bottom: _Tabs(tabController: _tabController),
+      ),
+      body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(height: 25),
+          SizedBox(height: 25),
+          // Expanded(
+          //     child: ListView.builder(
+          //         itemCount: filteredSchedules.length,
+          //         itemBuilder: ((context, index) {
+          //           var schedule = filteredSchedules[index];
+          //           bool isLastElement = filteredSchedules.length + 1 == index;
+          //           return Card(
+          //             shape: RoundedRectangleBorder(
+          //               side: const BorderSide(
+          //                 color: Colors.grey,
+          //               ),
+          //               borderRadius: BorderRadius.circular(20),
+          //             ),
+          //             margin: !isLastElement ? const EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
+          //             child: Padding(
+          //               padding: const EdgeInsets.all(15),
+          //               child: Column(
+          //                 crossAxisAlignment: CrossAxisAlignment.stretch,
+          //                 children: [
+          //                   Row(
+          //                     children: [
+          //                       CircleAvatar(
+          //                         backgroundImage: AssetImage(schedule['doctor_profile']),
+          //                       ),
+          //                       const SizedBox(
+          //                         width: 10,
+          //                       ),
+          //                       Column(
+          //                         crossAxisAlignment: CrossAxisAlignment.start,
+          //                         children: [
+          //                           Text(
+          //                             schedule['doctor_name'],
+          //                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
+          //                           ),
+          //                           const SizedBox(
+          //                             height: 5,
+          //                           ),
+          //                           Text(
+          //                             schedule['category'],
+          //                             style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w600),
+          //                           )
+          //                         ],
+          //                       )
+          //                     ],
+          //                   ),
+          //                   const SizedBox(
+          //                     height: 15,
+          //                   ),
+          //                   //schedule Card
+          //                   const ScheduleCard(),
+          //                   const SizedBox(
+          //                     height: 15,
+          //                   ),
+          //                   Row(
+          //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                     children: [
+          //                       Expanded(
+          //                         child: OutlinedButton(
+          //                           onPressed: () {},
+          //                           child: const Text(
+          //                             'Cancel',
+          //                             style: TextStyle(color: Colors.black),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       const SizedBox(
+          //                         width: 20,
+          //                       ),
+          //                       Expanded(
+          //                         child: OutlinedButton(
+          //                           style: OutlinedButton.styleFrom(
+          //                             backgroundColor: AppTheme.primaryColor,
+          //                           ),
+          //                           onPressed: () {},
+          //                           child: const Text(
+          //                             'Reschedule',
+          //                             style: TextStyle(color: Colors.white),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 ],
+          //               ),
+          //             ),
+          //           );
+          //         })))
+        ],
+      ),
+    );
+  }
+}
+
+class _Tabs extends StatelessWidget {
+  final TabController tabController;
+  const _Tabs({required this.tabController});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: TabBar(
+        controller: tabController,
+        physics: const BouncingScrollPhysics(),
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.0),
+          color: AppTheme.primaryColor,
         ),
+        labelStyle: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.grey[500],
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        dividerColor: Colors.transparent,
+        indicatorSize: TabBarIndicatorSize.tab,
+        indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
+        tabs: const [
+          Tab(text: 'Active'),
+          Tab(text: 'Pending'),
+          Tab(text: 'Completed'),
+        ],
       ),
     );
   }
