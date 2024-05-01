@@ -43,6 +43,7 @@ dependencies:
   dio_cache_interceptor: ^3.5.0
   connectivity_plus: ^5.0.2
   # state management & dir
+  intl: ^0.19.0
   shared_preferences: ^2.2.3
   flutter_bloc: ^8.1.4
   # device
@@ -54,7 +55,7 @@ dependencies:
   uni_links: ^0.5.1
   # ui
   font_awesome_flutter: ^10.2.1
-  # table_calendar: ^3.1.1
+  table_calendar: ^3.1.1
   lottie: ^3.1.0
   rating_dialog: ^2.0.4
   fluttertoast: ^8.2.5
@@ -68,6 +69,9 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+dependency_overrides:
+  intl: any
 
 dev_dependencies:
   flutter_test:

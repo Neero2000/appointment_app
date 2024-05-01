@@ -8,7 +8,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils();
+  FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils.instance;
   @override
   Widget build(BuildContext context) {
     final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);

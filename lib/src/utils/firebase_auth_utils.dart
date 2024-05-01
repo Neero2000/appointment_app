@@ -1,8 +1,8 @@
 import '../config/index.dart';
 
 class FirebaseAuthUtils {
-  static final FirebaseAuthUtils _instance = FirebaseAuthUtils._internal();
-  factory FirebaseAuthUtils() => _instance;
+  static final FirebaseAuthUtils instance = FirebaseAuthUtils._internal();
+  factory FirebaseAuthUtils() => instance;
   FirebaseAuthUtils._internal();
 
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -10,6 +10,10 @@ class FirebaseAuthUtils {
   bool get isLoggedIn => firebaseAuth.currentUser != null;
 
   bool get isAdmin => firebaseAuth.currentUser!.email == 'mensefgames@gmail.com';
+
+  String get name => firebaseAuth.currentUser!.email!.split('@')[0];
+
+  String get uid => firebaseAuth.currentUser!.uid;
 
   Future<void> login({
     required String email,

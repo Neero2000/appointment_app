@@ -9,7 +9,7 @@ enum Pages {
   signup,
   chat,
   doctorDetails,
-  appointmentBookedSuccess,
-  appointment,
   booking,
+  payment,
+  appointmentBooked,
 }

@@ -1,7 +1,7 @@
 import '../../../config/index.dart';
 
 class LoginForm extends StatefulWidget {
-  final Function(String email, String password) onLogin;
+  final Future Function(String email, String password) onLogin;
 
   const LoginForm({
     super.key,
@@ -68,17 +68,17 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: 25),
-          Button(
+          CustomLoadingButton(
             width: double.infinity,
-            title: 'Sign In',
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                final email = _emailController.text.trim();
-                final password = _passController.text.trim();
-                widget.onLogin(email, password);
-              }
+            text: 'Sign In',
+            validateFunction: () async {
+              return _formKey.currentState!.validate();
             },
-            disable: false,
+            loadingFunction: () async {
+              final email = _emailController.text.trim();
+              final password = _passController.text.trim();
+              await widget.onLogin(email, password);
+            },
           ),
         ],
       ),

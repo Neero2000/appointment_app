@@ -11,13 +11,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final PageController _pageController = PageController();
-  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils();
+  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         controller: _pageController,
+        physics: const BouncingScrollPhysics(),
         onPageChanged: ((value) {
           setState(() {
             _selectedIndex = value;
@@ -26,17 +27,16 @@ class _HomePageState extends State<HomePage> {
         children: _firebaseAuthUtils.isAdmin
             ? [
                 const AdminHomePage(),
-                const AppointmentPage(),
+                const AppointmentsPage(),
                 const ChatPage(),
               ]
             : [
                 const ClientHomePage(),
-                const AppointmentPage(),
+                const AppointmentsPage(),
                 const ChatPage(),
                 const ProfilePage(),
               ],
       ),
-      backgroundColor: Colors.white,
       bottomNavigationBar: SizedBox(
         height: 100,
         child: BottomNavigationBar(
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
           onTap: (index) {
             setState(() {
               _selectedIndex = index;
-              _pageController.jumpToPage(index);
+              _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             });
           },
           items: _firebaseAuthUtils.isAdmin

@@ -1,4 +1,4 @@
-import '../index.dart';
+import '../../../config/index.dart';
 
 class SocialButton extends StatelessWidget {
   const SocialButton({super.key, required this.social});

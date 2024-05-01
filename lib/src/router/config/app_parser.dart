@@ -30,6 +30,14 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return pages.signupPageConfig;
       case ChatPage.path:
         return pages.chatPageConfig;
+      case DoctorDetailsPage.path:
+        return pages.doctorDetailsPageConfig;
+      case BookingPage.path:
+        return pages.bookingPageConfig;
+      case PaymentPage.path:
+        return pages.paymentPageConfig;
+      case AppointmentBookedPage.path:
+        return pages.appointmentBookedPageConfig;
       default:
         return pages.splashPageConfig;
     }
@@ -55,6 +63,14 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return RouteInformation(uri: Uri.parse(SignupPage.path));
       case Pages.chat:
         return RouteInformation(uri: Uri.parse(ChatPage.path));
+      case Pages.doctorDetails:
+        return RouteInformation(uri: Uri.parse(DoctorDetailsPage.path));
+      case Pages.booking:
+        return RouteInformation(uri: Uri.parse(BookingPage.path));
+      case Pages.payment:
+        return RouteInformation(uri: Uri.parse(PaymentPage.path));
+      case Pages.appointmentBooked:
+        return RouteInformation(uri: Uri.parse(AppointmentBookedPage.path));
       default:
         return RouteInformation(uri: Uri.parse(SplashPage.path));
     }

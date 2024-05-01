@@ -1,4 +1,5 @@
 class DoctorModel {
+  final String id;
   final String name;
   final String assetPath;
   final String speciality;
@@ -11,8 +12,10 @@ class DoctorModel {
   final String endDate;
   final String startTime;
   final String endTime;
+  final int price;
 
   DoctorModel({
+    required this.id,
     required this.name,
     required this.assetPath,
     required this.speciality,
@@ -25,5 +28,6 @@ class DoctorModel {
     required this.endDate,
     required this.startTime,
     required this.endTime,
+    required this.price,
   });
 }

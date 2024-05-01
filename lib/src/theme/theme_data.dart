@@ -57,7 +57,7 @@ class AppTheme {
   ThemeData get themeData => ThemeData(
         colorScheme: _colorScheme,
         appBarTheme: _appBarTheme,
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.grey[100],
         textTheme: _textTheme,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

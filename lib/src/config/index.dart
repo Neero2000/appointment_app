@@ -1,8 +1,7 @@
 // Global widgets
-export 'widgets/button.dart';
-export 'widgets/custom_appbar.dart';
-export 'widgets/social_button.dart';
+export 'widgets/custom_loading_button.dart';
 export 'widgets/custom_error_widget.dart';
+export 'widgets/custom_app_bar.dart';
 
 // features
 export '../features/home/index.dart';
@@ -13,14 +12,17 @@ export '../features/appointment/index.dart';
 export '../features/splash/index.dart';
 
 // models
-export '../models/message_model.dart';
 export '../models/doctor_model.dart';
+export '../models/time_slot_model.dart';
+export '../models/speciality_model.dart';
+export '../models/appointment_model.dart';
 
 // utils
 export '../utils/config_utils.dart';
 export '../utils/text.dart';
 export '../utils/firebase_auth_utils.dart';
 export '../utils/data_utils.dart';
+export '../utils/firebase_firestore_utils.dart';
 
 // cubit
 
@@ -80,3 +82,4 @@ export 'package:uni_links/uni_links.dart';
 export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'package:lottie/lottie.dart';
+export 'package:table_calendar/table_calendar.dart';

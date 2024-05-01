@@ -1,7 +1,7 @@
 import '../../../config/index.dart';
 
 class RegisterForm extends StatefulWidget {
-  final Function(String email, String password) onRegister;
+  final Future Function(String email, String password) onRegister;
 
   const RegisterForm({
     super.key,
@@ -119,17 +119,17 @@ class _RegisterFormState extends State<RegisterForm> {
             },
           ),
           const SizedBox(height: 25),
-          Button(
+          CustomLoadingButton(
             width: double.infinity,
-            title: 'Register',
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                final email = _emailController.text.trim();
-                final password = _passController.text.trim();
-                widget.onRegister(email, password);
-              }
+            text: 'Register',
+            validateFunction: () async {
+              return _formKey.currentState!.validate();
             },
-            disable: false,
+            loadingFunction: () async {
+              final email = _emailController.text.trim();
+              final password = _passController.text.trim();
+              await widget.onRegister(email, password);
+            },
           ),
         ],
       ),

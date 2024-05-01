@@ -47,4 +47,24 @@ class PageConfigurations {
     page: Pages.chat,
     child: ChatPage(),
   );
+  PageConfiguration doctorDetailsPageConfig = const PageConfiguration(
+    path: DoctorDetailsPage.path,
+    page: Pages.doctorDetails,
+    child: DoctorDetailsPage(),
+  );
+  PageConfiguration bookingPageConfig = const PageConfiguration(
+    path: BookingPage.path,
+    page: Pages.booking,
+    child: BookingPage(),
+  );
+  PageConfiguration paymentPageConfig = const PageConfiguration(
+    path: PaymentPage.path,
+    page: Pages.payment,
+    child: PaymentPage(),
+  );
+  PageConfiguration appointmentBookedPageConfig = const PageConfiguration(
+    path: AppointmentBookedPage.path,
+    page: Pages.appointmentBooked,
+    child: AppointmentBookedPage(),
+  );
 }

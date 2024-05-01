@@ -6,29 +6,24 @@ class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notifications'),
-        leading: IconButton(
-          icon: const Icon(FontAwesomeIcons.arrowLeft),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: const Center(
+    return const Scaffold(
+      appBar: CustomAppBar(title: 'Notifications'),
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               CupertinoIcons.bell,
               size: 100,
-              color: Colors.blue,
+              color: AppTheme.primaryColor,
             ),
             SizedBox(height: 20),
             Text(
               'No new notifications',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                fontSize: 20,
+                color: AppTheme.primaryColor,
+              ),
             ),
           ],
         ),

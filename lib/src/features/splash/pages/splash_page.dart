@@ -9,7 +9,7 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  late final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils();
+  late final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
 
   bool _initialized = false;
 
