@@ -30,4 +30,21 @@ class DoctorModel {
     required this.endTime,
     required this.price,
   });
+
+  DoctorModel.empty({
+    this.id = '',
+    this.name = '-',
+    this.assetPath = '',
+    this.speciality = '-',
+    this.isPaymentCash = false,
+    this.patientNumber = 0,
+    this.experience = 0,
+    this.notation = 0,
+    this.reviewNumber = 0,
+    this.startDate = '-',
+    this.endDate = '-',
+    this.startTime = '-',
+    this.endTime = '-',
+    this.price = 0,
+  });
 }

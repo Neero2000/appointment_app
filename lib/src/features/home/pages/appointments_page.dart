@@ -12,12 +12,14 @@ class _AppointmentsPageState extends State<AppointmentsPage> with SingleTickerPr
 
   late TabController _tabController;
   final List<String> _statuses = [
-    "started",
     "pending",
     "completed",
+    "canceled",
   ];
 
   final List<AppointmentModel> _appointments = [];
+  bool _isLoading = true;
+  bool _isError = false;
 
   @override
   void initState() {
@@ -28,16 +30,29 @@ class _AppointmentsPageState extends State<AppointmentsPage> with SingleTickerPr
 
   @override
   void dispose() {
-    super.dispose();
     _tabController.dispose();
+    _isLoading = true;
+    _isError = false;
+    super.dispose();
   }
 
   Future _fetchAppointments() async {
-    final QuerySnapshot querySnapshot = await firebaseFirestoreUtils.getAppointments(userId: firebaseAuthUtils.uid);
-    final List<AppointmentModel> appointments = querySnapshot.docs.map((doc) => doc.data()).map((data) => AppointmentModel.fromJson(jsonDecode(data.toString()))).toList();
+    final List<AppointmentModel> appointments = await firebaseFirestoreUtils.getAppointments(userId: firebaseAuthUtils.uid);
+    if (mounted) {
+      setState(() {
+        _appointments.clear();
+        _appointments.addAll(appointments);
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _refresh() {
     setState(() {
-      _appointments.addAll(appointments);
+      _isLoading = true;
+      _isError = false;
     });
+    _fetchAppointments();
   }
 
   @override
@@ -48,98 +63,18 @@ class _AppointmentsPageState extends State<AppointmentsPage> with SingleTickerPr
         addBackButton: false,
         bottom: _Tabs(tabController: _tabController),
       ),
-      body: const Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: TabBarView(
+        controller: _tabController,
+        physics: const BouncingScrollPhysics(),
         children: [
-          SizedBox(height: 25),
-          SizedBox(height: 25),
-          // Expanded(
-          //     child: ListView.builder(
-          //         itemCount: filteredSchedules.length,
-          //         itemBuilder: ((context, index) {
-          //           var schedule = filteredSchedules[index];
-          //           bool isLastElement = filteredSchedules.length + 1 == index;
-          //           return Card(
-          //             shape: RoundedRectangleBorder(
-          //               side: const BorderSide(
-          //                 color: Colors.grey,
-          //               ),
-          //               borderRadius: BorderRadius.circular(20),
-          //             ),
-          //             margin: !isLastElement ? const EdgeInsets.only(bottom: 20) : EdgeInsets.zero,
-          //             child: Padding(
-          //               padding: const EdgeInsets.all(15),
-          //               child: Column(
-          //                 crossAxisAlignment: CrossAxisAlignment.stretch,
-          //                 children: [
-          //                   Row(
-          //                     children: [
-          //                       CircleAvatar(
-          //                         backgroundImage: AssetImage(schedule['doctor_profile']),
-          //                       ),
-          //                       const SizedBox(
-          //                         width: 10,
-          //                       ),
-          //                       Column(
-          //                         crossAxisAlignment: CrossAxisAlignment.start,
-          //                         children: [
-          //                           Text(
-          //                             schedule['doctor_name'],
-          //                             style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
-          //                           ),
-          //                           const SizedBox(
-          //                             height: 5,
-          //                           ),
-          //                           Text(
-          //                             schedule['category'],
-          //                             style: const TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w600),
-          //                           )
-          //                         ],
-          //                       )
-          //                     ],
-          //                   ),
-          //                   const SizedBox(
-          //                     height: 15,
-          //                   ),
-          //                   //schedule Card
-          //                   const ScheduleCard(),
-          //                   const SizedBox(
-          //                     height: 15,
-          //                   ),
-          //                   Row(
-          //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //                     children: [
-          //                       Expanded(
-          //                         child: OutlinedButton(
-          //                           onPressed: () {},
-          //                           child: const Text(
-          //                             'Cancel',
-          //                             style: TextStyle(color: Colors.black),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                       const SizedBox(
-          //                         width: 20,
-          //                       ),
-          //                       Expanded(
-          //                         child: OutlinedButton(
-          //                           style: OutlinedButton.styleFrom(
-          //                             backgroundColor: AppTheme.primaryColor,
-          //                           ),
-          //                           onPressed: () {},
-          //                           child: const Text(
-          //                             'Reschedule',
-          //                             style: TextStyle(color: Colors.white),
-          //                           ),
-          //                         ),
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ],
-          //               ),
-          //             ),
-          //           );
-          //         })))
+          ..._statuses.map(
+            (status) => _TabBarView(
+              appointments: _appointments.where((appointment) => appointment.status == status).toList(),
+              isError: _isError,
+              isLoading: _isLoading,
+              refresh: _refresh,
+            ),
+          ),
         ],
       ),
     );
@@ -151,94 +86,84 @@ class _Tabs extends StatelessWidget {
   const _Tabs({required this.tabController});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: TabBar(
-        controller: tabController,
-        physics: const BouncingScrollPhysics(),
-        indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
-          color: AppTheme.primaryColor,
+    return Column(
+      children: [
+        Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: TabBar(
+            controller: tabController,
+            physics: const BouncingScrollPhysics(),
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: AppTheme.primaryColor,
+            ),
+            labelStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            labelColor: Colors.white,
+            unselectedLabelColor: Colors.grey[500],
+            overlayColor: MaterialStateProperty.all(Colors.transparent),
+            dividerColor: Colors.transparent,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
+            tabs: const [
+              Tab(text: 'Pending'),
+              Tab(text: 'Completed'),
+              Tab(text: 'Canceled'),
+            ],
+          ),
         ),
-        labelStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.grey[500],
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
-        dividerColor: Colors.transparent,
-        indicatorSize: TabBarIndicatorSize.tab,
-        indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
-        tabs: const [
-          Tab(text: 'Active'),
-          Tab(text: 'Pending'),
-          Tab(text: 'Completed'),
-        ],
-      ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }
 
-class ScheduleCard extends StatelessWidget {
-  const ScheduleCard({super.key});
-
+class _TabBarView extends StatelessWidget {
+  final List<AppointmentModel> appointments;
+  final bool isError;
+  final bool isLoading;
+  final VoidCallback refresh;
+  const _TabBarView({
+    required this.appointments,
+    required this.isError,
+    required this.isLoading,
+    required this.refresh,
+  });
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF4A5D71),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      child: const Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Icon(
-            FontAwesomeIcons.calendarAlt, // Use FontAwesome icon
-            color: Colors.white,
-            size: 15,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Text(
-            'Friday, 3/3/2024',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Icon(
-            FontAwesomeIcons.clock, // Use FontAwesome icon
-            color: Colors.white,
-            size: 17,
-          ),
-          SizedBox(
-            width: 5,
-          ),
-          Flexible(
-            child: Text(
-              '2:00 PM',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
+    if (isError) {
+      return ErrorRefreshItem(
+        errorText: "Error loading appointments. Please try again later.",
+        refresh: refresh,
+      );
+    }
+    if (isLoading) {
+      return const AppointmentsLoading();
+    }
+    if (appointments.isEmpty) {
+      return AppointmentsEmpty(
+        refresh: refresh,
+      );
+    }
+    return ListView.separated(
+      itemCount: appointments.length,
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      itemBuilder: (context, index) {
+        return AppointmentCard(
+          appointment: appointments[index],
+          refresh: refresh,
+        );
+      },
+      separatorBuilder: (context, index) {
+        return const SizedBox(height: 20);
+      },
     );
   }
 }

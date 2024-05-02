@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/src/models/appointment_model.dart';
+
 import '../config/index.dart';
 import 'package:intl/intl.dart';
 
@@ -21,12 +23,24 @@ class FirebaseFirestoreUtils {
         'userId': userId,
         'date': DateFormat('yyyy-MM-dd').format(date),
         'time': timeSlot.time,
-        'status': 'upcoming',
+        'status': 'pending',
       },
     );
   }
 
-  Future<QuerySnapshot<Map<String, dynamic>>> getAppointments({required String userId}) async {
-    return await firebaseFirestore.collection('appointments').where('userId', isEqualTo: userId).get();
+  Future<List<AppointmentModel>> getAppointments({required String userId}) async {
+    final List<AppointmentModel> appointments = [];
+    final Query<Map<String, dynamic>> query = firebaseFirestore.collection('appointments').where('userId', isEqualTo: userId);
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await query.get();
+    querySnapshot.docs.map((e) => e.data()..addAll({'id': e.id})).forEach((v) {
+      appointments.add(AppointmentModel.fromJson(v));
+    });
+    return appointments;
+  }
+
+  Future cancelAppointment({required String appointmentId}) async {
+    await firebaseFirestore.collection('appointments').doc(appointmentId).update(
+      {'status': 'canceled'},
+    );
   }
 }
