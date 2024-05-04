@@ -84,10 +84,18 @@ class RootApp extends StatefulWidget {
 class _RootAppState extends State<RootApp> {
   late final AppRouterDelegate _routerHandler = AppRouterDelegate();
 
-  final ConfigUtils _config = ConfigUtils();
+  final ConfigUtils _config = ConfigUtils.instance;
+
+  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
 
   _RootAppState() {
     _routerHandler.setNewRoutePath(PageConfigurations().splashPageConfig);
+  }
+
+  @override
+  void initState() {
+    _firebaseAuthUtils.init();
+    super.initState();
   }
 
   @override
@@ -121,7 +129,7 @@ class _NotificationLayer extends StatefulWidget {
 class _NotificationLayerState extends State<_NotificationLayer> {
   late StreamSubscription _deepLinkSubscription;
 
-  final ConfigUtils _config = ConfigUtils();
+  final ConfigUtils _config = ConfigUtils.instance;
 
   @override
   void initState() {
@@ -303,7 +311,7 @@ class _App extends StatefulWidget {
 class _AppState extends State<_App> {
   final AppTheme _appTheme = AppTheme();
   final AppParser _appParser = AppParser();
-  final ConfigUtils _config = ConfigUtils();
+  final ConfigUtils _config = ConfigUtils.instance;
   @override
   Widget build(BuildContext context) {
     final LangCubit langCubit = BlocProvider.of<LangCubit>(context, listen: true);
@@ -326,63 +334,9 @@ class _AppState extends State<_App> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          builder: (context, child) => _StreamChat(child: child!),
+          builder: (context, child) => child!,
         ),
       ),
-    );
-  }
-}
-
-class _StreamChat extends StatefulWidget {
-  final Widget child;
-  const _StreamChat({required this.child});
-
-  @override
-  State<_StreamChat> createState() => _StreamChatState();
-}
-
-class _StreamChatState extends State<_StreamChat> {
-  late chat.StreamChatClient client;
-
-  final ConfigUtils _config = ConfigUtils();
-
-  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils();
-
-  @override
-  void initState() {
-    _init();
-    super.initState();
-  }
-
-  Future _init() async {
-    client = chat.StreamChatClient(
-      _config.streamChatApiKey,
-      logLevel: chat.Level.OFF,
-    );
-
-    if (_firebaseAuthUtils.isLoggedIn) {
-      final token = client.devToken(_firebaseAuthUtils.firebaseAuth.currentUser!.uid);
-
-      await client.connectUser(
-        chat.User(
-          id: _firebaseAuthUtils.firebaseAuth.currentUser!.uid,
-        ),
-        token.rawValue,
-      );
-    } else {
-      await client.connectGuestUser(chat.User(id: 'guest'));
-    }
-
-    final streamChatChannel = client.channel('messaging', id: 'flutterdevs');
-
-    await streamChatChannel.watch();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return chat.StreamChat(
-      client: client,
-      child: widget.child,
     );
   }
 }

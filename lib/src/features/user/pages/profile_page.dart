@@ -3,181 +3,159 @@ import 'package:flutter/cupertino.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
-
   @override
   State<ProfilePage> createState() => _ProfilePageState();
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  late User? _user; // Declare a variable to hold the logged-in user
-
-  @override
-  void initState() {
-    super.initState();
-    _user = FirebaseAuth.instance.currentUser; // Get the currently logged-in user
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Settings",
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w500,
+    return const Scaffold(
+      appBar: CustomAppBar(
+        title: 'Profile',
+        addBackButton: false,
+      ),
+      body: _Body(),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body();
+  @override
+  Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      shrinkWrap: true,
+      children: [
+        const SizedBox(height: 28),
+        const _Profile(),
+        const SizedBox(height: 28),
+        const Divider(indent: 18, endIndent: 18),
+        _SettingsItem(
+          title: "Privacy",
+          icon: Icons.lock,
+          color: Colors.indigo,
+          onPressed: () {},
+        ),
+        _SettingsItem(
+          title: "Language",
+          icon: Icons.translate,
+          color: Colors.green,
+          onPressed: () {},
+        ),
+        _SettingsItem(
+          title: "About Us",
+          icon: Icons.info_outline,
+          color: Colors.orange,
+          onPressed: () {},
+        ),
+        const Divider(indent: 18, endIndent: 18),
+        _SettingsItem(
+            title: "Logout",
+            icon: Icons.exit_to_app,
+            color: Colors.redAccent,
+            onPressed: () async {
+              FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils.instance;
+              await firebaseAuthUtils.signout(
+                onSuccess: () {
+                  router.launchLogin();
+                },
+              );
+            }),
+      ],
+    );
+  }
+}
+
+class _Profile extends StatelessWidget {
+  const _Profile();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SizedBox(width: 18),
+        SizedBox(
+          height: 80,
+          width: 80,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: Image.asset(
+              "assets/12.jpg",
+              fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(height: 30),
-          ListTile(
-            leading: const CircleAvatar(
-              radius: 30,
-              backgroundImage: AssetImage("assets/12.jpg"),
-            ),
-            title: Text(
-              " ${_user?.email ?? ""}", // Display user's email or "Programmer" if not available
+        ),
+        const SizedBox(width: 18),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              FirebaseAuthUtils.instance.email,
               style: const TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
               ),
             ),
-            subtitle: const Text("Profile"),
-          ),
-          const Divider(height: 50),
-          ListTile(
-            onTap: () {}, // Here is the onTap property
-            leading: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                CupertinoIcons.person,
-                color: Colors.blue,
-                size: 35,
-              ),
-            ),
-            title: const Text(
-              "Profile",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-            trailing: const Icon(CupertinoIcons.forward),
-          ),
-          const SizedBox(height: 20),
-          ListTile(
-            onTap: () {}, // Here is the onTap property
-            leading: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.indigo.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                CupertinoIcons.lock_shield,
-                color: Colors.indigo,
-                size: 35,
-              ),
-            ),
-            title: const Text(
-              "Privacy",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-            trailing: const Icon(CupertinoIcons.forward),
-          ),
-          const SizedBox(height: 20),
-          ListTile(
-            onTap: () {}, // Here is the onTap property
-            leading: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.green.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                CupertinoIcons.gear,
-                color: Colors.green,
-                size: 35,
-              ),
-            ),
-            title: const Text(
-              "General",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-            trailing: const Icon(CupertinoIcons.forward),
-          ),
-          const SizedBox(height: 20),
-          ListTile(
-            onTap: () {}, // Here is the onTap property
-            leading: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.orange.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                CupertinoIcons.info,
-                color: Colors.orange,
-                size: 35,
-              ),
-            ),
-            title: const Text(
-              "About Us",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-            trailing: const Icon(CupertinoIcons.forward),
-          ),
-          const Divider(height: 40),
-          ListTile(
-            onTap: () {
-              _signOut(); // Call the _signOut function when tapped
-            },
-            leading: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.redAccent.shade100,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                CupertinoIcons.power,
-                color: Colors.redAccent,
-                size: 35,
-              ),
-            ),
-            title: const Text(
-              "Log Out",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 20,
-              ),
-            ),
-          ),
-        ],
-      ),
+            const Text("Profile"),
+          ],
+        ),
+        const SizedBox(width: 18),
+      ],
     );
   }
+}
 
-  Future<void> _signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      Navigator.of(context).pushReplacementNamed('/');
-    } catch (e) {
-      print("Error signing out: $e");
-    }
+class _SettingsItem extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final Color color;
+  final VoidCallback onPressed;
+  const _SettingsItem({
+    required this.title,
+    required this.icon,
+    required this.color,
+    required this.onPressed,
+  });
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 70,
+      child: CupertinoButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        child: Row(
+          children: [
+            const SizedBox(width: 18),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: color.withOpacity(.15),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                icon,
+                color: color,
+                size: 30,
+              ),
+            ),
+            const SizedBox(width: 18),
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+              ),
+            ),
+            const Expanded(child: SizedBox()),
+            const Icon(CupertinoIcons.forward),
+            const SizedBox(width: 18),
+          ],
+        ),
+      ),
+    );
   }
 }

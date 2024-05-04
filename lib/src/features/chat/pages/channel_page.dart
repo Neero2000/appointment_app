@@ -1,22 +1,33 @@
 import '../../../config/index.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as chat;
 
-class ChannelPage extends StatelessWidget {
-  const ChannelPage({
-    super.key,
-  });
+class ChannelArgs {
+  final chat.Channel channel;
+  const ChannelArgs({required this.channel});
+}
 
+class ChannelPage extends StatelessWidget {
+  static const String path = '/channel';
+  const ChannelPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: chat.StreamChannelHeader(),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: chat.StreamMessageListView(),
+    final ChannelArgs args = ModalRoute.of(context)?.settings.arguments as ChannelArgs;
+    return chat.StreamChat(
+      client: FirebaseAuthUtils.instance.streamChatClient,
+      streamChatThemeData: AppTheme().streamChatThemeData,
+      child: chat.StreamChannel(
+        channel: args.channel,
+        child: const Scaffold(
+          appBar: chat.StreamChannelHeader(),
+          body: Column(
+            children: <Widget>[
+              Expanded(
+                child: chat.StreamMessageListView(),
+              ),
+              chat.StreamMessageInput(),
+            ],
           ),
-          chat.StreamMessageInput(),
-        ],
+        ),
       ),
     );
   }

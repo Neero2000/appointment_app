@@ -18,10 +18,6 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return pages.splashPageConfig;
       case HomePage.path:
         return pages.homePageConfig;
-      case ClientHomePage.path:
-        return pages.clientHomePageConfig;
-      case AdminHomePage.path:
-        return pages.adminHomePageConfig;
       case NotificationsPage.path:
         return pages.notificationsPageConfig;
       case LoginPage.path:
@@ -38,6 +34,8 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return pages.paymentPageConfig;
       case AppointmentBookedPage.path:
         return pages.appointmentBookedPageConfig;
+      case ChannelPage.path:
+        return pages.channelPageConfig;
       default:
         return pages.splashPageConfig;
     }
@@ -51,10 +49,6 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return RouteInformation(uri: Uri.parse(SplashPage.path));
       case Pages.home:
         return RouteInformation(uri: Uri.parse(ClientHomePage.path));
-      case Pages.clientHome:
-        return RouteInformation(uri: Uri.parse(ClientHomePage.path));
-      case Pages.adminHome:
-        return RouteInformation(uri: Uri.parse(AdminHomePage.path));
       case Pages.notifications:
         return RouteInformation(uri: Uri.parse(NotificationsPage.path));
       case Pages.login:
@@ -71,6 +65,8 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return RouteInformation(uri: Uri.parse(PaymentPage.path));
       case Pages.appointmentBooked:
         return RouteInformation(uri: Uri.parse(AppointmentBookedPage.path));
+      case Pages.channel:
+        return RouteInformation(uri: Uri.parse(ChannelPage.path));
       default:
         return RouteInformation(uri: Uri.parse(SplashPage.path));
     }

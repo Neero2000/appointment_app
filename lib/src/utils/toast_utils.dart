@@ -1,10 +1,10 @@
 import '../config/index.dart';
 
 class ToastUtils {
-  static final ToastUtils _instance = ToastUtils._internal();
+  static final ToastUtils instance = ToastUtils._internal();
 
   factory ToastUtils() {
-    return _instance;
+    return instance;
   }
 
   ToastUtils._internal();

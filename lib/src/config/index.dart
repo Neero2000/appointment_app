@@ -3,6 +3,7 @@ export 'widgets/custom_loading_button.dart';
 export 'widgets/custom_error_widget.dart';
 export 'widgets/custom_app_bar.dart';
 export 'widgets/error_refresh_item.dart';
+export 'widgets/custom_field.dart';
 
 // features
 export '../features/home/index.dart';
@@ -20,10 +21,11 @@ export '../models/appointment_model.dart';
 
 // utils
 export '../utils/config_utils.dart';
-export '../utils/text.dart';
 export '../utils/firebase_auth_utils.dart';
 export '../utils/data_utils.dart';
 export '../utils/firebase_firestore_utils.dart';
+export '../utils/validation_utils.dart';
+export '../utils/toast_utils.dart';
 
 // cubit
 

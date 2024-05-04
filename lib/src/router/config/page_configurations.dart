@@ -17,16 +17,6 @@ class PageConfigurations {
     page: Pages.home,
     child: HomePage(),
   );
-  PageConfiguration clientHomePageConfig = const PageConfiguration(
-    path: ClientHomePage.path,
-    page: Pages.clientHome,
-    child: ClientHomePage(),
-  );
-  PageConfiguration adminHomePageConfig = const PageConfiguration(
-    path: AdminHomePage.path,
-    page: Pages.adminHome,
-    child: AdminHomePage(),
-  );
   PageConfiguration notificationsPageConfig = const PageConfiguration(
     path: NotificationsPage.path,
     page: Pages.notifications,
@@ -66,5 +56,10 @@ class PageConfigurations {
     path: AppointmentBookedPage.path,
     page: Pages.appointmentBooked,
     child: AppointmentBookedPage(),
+  );
+  PageConfiguration channelPageConfig = const PageConfiguration(
+    path: ChannelPage.path,
+    page: Pages.channel,
+    child: ChannelPage(),
   );
 }

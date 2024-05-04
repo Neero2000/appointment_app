@@ -24,11 +24,11 @@ class _HomePageState extends State<HomePage> {
             _selectedIndex = value;
           });
         }),
-        children: _firebaseAuthUtils.isAdmin
+        children: _firebaseAuthUtils.isDoctor
             ? [
-                const AdminHomePage(),
                 const AppointmentsPage(),
                 const ChatPage(),
+                const ProfilePage(),
               ]
             : [
                 const ClientHomePage(),
@@ -55,12 +55,8 @@ class _HomePageState extends State<HomePage> {
               _pageController.animateToPage(index, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
             });
           },
-          items: _firebaseAuthUtils.isAdmin
+          items: _firebaseAuthUtils.isDoctor
               ? [
-                  const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.home, size: 26),
-                    label: "Home",
-                  ),
                   const BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.calendar, size: 26),
                     label: "Schedule",
@@ -68,6 +64,10 @@ class _HomePageState extends State<HomePage> {
                   const BottomNavigationBarItem(
                     icon: Icon(CupertinoIcons.chat_bubble_text_fill, size: 26),
                     label: "Messages",
+                  ),
+                  const BottomNavigationBarItem(
+                    icon: Icon(CupertinoIcons.profile_circled, size: 26),
+                    label: "Profile",
                   ),
                 ]
               : [
@@ -84,8 +84,8 @@ class _HomePageState extends State<HomePage> {
                     label: "Messages",
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(CupertinoIcons.settings, size: 26),
-                    label: "Settings",
+                    icon: Icon(CupertinoIcons.profile_circled, size: 26),
+                    label: "Profile",
                   ),
                 ],
         ),

@@ -90,7 +90,7 @@ class _DateAndTime extends StatelessWidget {
           const SizedBox(width: 18),
           _Date(appointment: appointment),
           const SizedBox(width: 18),
-          _Time(appointment: appointment),
+          Flexible(child: _Time(appointment: appointment)),
           const SizedBox(width: 18),
         ],
       ),
@@ -106,12 +106,14 @@ class _Date extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(
-          DateFormat('EEEE, dd/MM/yyyy').format(DateTime.parse(appointment.date)),
-          style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+        Flexible(
+          child: Text(
+            DateFormat('EEEE, dd/MM/yyyy').format(DateTime.parse(appointment.date)),
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
           ),
         ),
       ],
@@ -130,7 +132,7 @@ class _Time extends StatelessWidget {
         const Icon(
           FontAwesomeIcons.clock,
           color: Colors.white,
-          size: 16,
+          size: 15,
         ),
         const SizedBox(width: 4),
         Flexible(
@@ -139,7 +141,7 @@ class _Time extends StatelessWidget {
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 15,
             ),
           ),
         ),
@@ -167,29 +169,38 @@ class _Actions extends StatelessWidget {
                     text: 'Cancel',
                     color: Colors.red,
                     height: 45,
+                    borderRadius: BorderRadius.circular(6),
                     loadingFunction: () async {
                       FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils();
                       await firebaseFirestoreUtils.cancelAppointment(appointmentId: appointment.id).then((value) {
                         refresh();
                       });
                     },
-                    borderRadius: BorderRadius.circular(6),
                   ),
                 ),
               ]
             : [],
-        // const SizedBox(width: 14),
-        // Expanded(
-        //   child: SizedBox(
-        //     child: CustomLoadingButton(
-        //       text: 'Confirm',
-        //       color: const Color(0xFF245FF4),
-        //       height: 45,
-        //       loadingFunction: () async {},
-        //       borderRadius: BorderRadius.circular(6),
-        //     ),
-        //   ),
-        // ),
+        ...(FirebaseAuthUtils.instance.isDoctor && appointment.status == 'pending')
+            ? [
+                const SizedBox(width: 14),
+                Expanded(
+                  child: SizedBox(
+                    child: CustomLoadingButton(
+                      text: 'Complete',
+                      color: Colors.green,
+                      height: 45,
+                      borderRadius: BorderRadius.circular(6),
+                      loadingFunction: () async {
+                        FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils();
+                        await firebaseFirestoreUtils.completeAppointment(appointmentId: appointment.id).then((value) {
+                          refresh();
+                        });
+                      },
+                    ),
+                  ),
+                ),
+              ]
+            : [],
       ],
     );
   }

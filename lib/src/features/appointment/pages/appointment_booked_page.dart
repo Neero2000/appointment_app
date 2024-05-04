@@ -14,7 +14,7 @@ class AppointmentBookedPage extends StatelessWidget {
           SizedBox(
             height: 300,
             child: Lottie.asset(
-              'assets/succes.json',
+              'assets/animations/succes_animation.json',
               repeat: false,
             ),
           ),

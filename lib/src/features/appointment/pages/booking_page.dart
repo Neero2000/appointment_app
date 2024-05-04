@@ -212,13 +212,13 @@ class _TimeSelector extends StatelessWidget {
           spacing: 8,
           runSpacing: 12,
           children: [
-            ...DataUtils().timeSlots.map(
-                  (_) => TimeSlotItem(
-                    timeSlot: _,
-                    isSelected: timeSlot == _,
-                    onPressed: () => timeSlotOnChanged(_),
-                  ),
-                ),
+            ...DataUtils.instance.timeSlots.map(
+              (_) => TimeSlotItem(
+                timeSlot: _,
+                isSelected: timeSlot == _,
+                onPressed: () => timeSlotOnChanged(_),
+              ),
+            ),
           ],
         ),
       ),

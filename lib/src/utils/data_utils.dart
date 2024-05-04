@@ -1,16 +1,16 @@
 import 'package:flutter_application_1/src/config/index.dart';
 
 class DataUtils {
-  static final DataUtils _instance = DataUtils._internal();
-  factory DataUtils() => _instance;
+  static final DataUtils instance = DataUtils._internal();
+  factory DataUtils() => instance;
   DataUtils._internal();
 
   // doctors
   List<DoctorModel> doctors = [
     DoctorModel(
-      id: 'john_doe',
-      name: 'Dr. John Doe',
-      assetPath: 'assets/images/doctor2.jpg',
+      id: 'CVi0SwVcA1TcMZPMu6Pa2vCmmzC2',
+      name: 'Doctor 1',
+      assetPath: 'assets/images/doctor1.jpg',
       speciality: 'Cardiologist',
       isPaymentCash: true,
       patientNumber: 100,
@@ -24,9 +24,9 @@ class DataUtils {
       price: 2500,
     ),
     DoctorModel(
-      id: 'jane_doe',
-      name: 'Dr. Jane Doe',
-      assetPath: 'assets/images/doctor1.jpg',
+      id: '6K47Cakze4T96ICSthCsEzATSKF2',
+      name: 'Doctor 2',
+      assetPath: 'assets/images/doctor2.jpg',
       speciality: 'Dermatologist',
       isPaymentCash: false,
       patientNumber: 200,
@@ -40,9 +40,9 @@ class DataUtils {
       price: 3000,
     ),
     DoctorModel(
-      id: 'james_doe',
-      name: 'Dr. James Doe',
-      assetPath: 'assets/images/doctor2.jpg',
+      id: 'bQiedXNOFrQnd1j0IRqa23EfQwx2',
+      name: 'Doctor 3',
+      assetPath: 'assets/images/doctor3.jpg',
       speciality: 'Neurologist',
       isPaymentCash: true,
       patientNumber: 150,
@@ -56,9 +56,9 @@ class DataUtils {
       price: 2000,
     ),
     DoctorModel(
-      id: 'jessica_doe',
-      name: 'Dr. Jessica Doe',
-      assetPath: 'assets/images/doctor1.jpg',
+      id: 'KCEJawRZkJQhpFKYKtsfGX0Vg6a2',
+      name: 'Doctor 4',
+      assetPath: 'assets/images/doctor4.jpg',
       speciality: 'Pediatrician',
       isPaymentCash: false,
       patientNumber: 250,

@@ -162,7 +162,6 @@ class _Child extends StatelessWidget {
         fontSize: fontSize,
         color: textColor,
         fontWeight: FontWeight.w800,
-        fontFamily: "Montserrat",
       ),
     );
   }

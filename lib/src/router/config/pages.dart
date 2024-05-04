@@ -2,8 +2,6 @@
 enum Pages {
   splash,
   home,
-  clientHome,
-  adminHome,
   notifications,
   login,
   signup,
@@ -12,4 +10,5 @@ enum Pages {
   booking,
   payment,
   appointmentBooked,
+  channel,
 }

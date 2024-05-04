@@ -17,20 +17,12 @@ class RouterCubit extends Cubit<AppRouterDelegate> {
     state.setNewRoutePath(_configurations.homePageConfig);
   }
 
-  void launchClientHome() {
-    state.addPage(state.createMaterialPage(_configurations.clientHomePageConfig, null));
-  }
-
-  void launchAdminHome() {
-    state.addPage(state.createMaterialPage(_configurations.adminHomePageConfig, null));
-  }
-
   void launchNotifications() {
     state.addPage(state.createMaterialPage(_configurations.notificationsPageConfig, null));
   }
 
   void launchLogin() {
-    state.addPage(state.createMaterialPage(_configurations.loginPageConfig, null));
+    state.setNewRoutePath(_configurations.loginPageConfig);
   }
 
   void launchSignup() {
@@ -56,6 +48,10 @@ class RouterCubit extends Cubit<AppRouterDelegate> {
   void launchAppointmentBooked() {
     state.setNewRoutePath(_configurations.homePageConfig);
     state.addPage(state.createMaterialPage(_configurations.appointmentBookedPageConfig, null));
+  }
+
+  void launchChannel({required Object arguments}) {
+    state.addPage(state.createMaterialPage(_configurations.channelPageConfig, arguments));
   }
 
   /// deep links

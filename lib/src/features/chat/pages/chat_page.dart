@@ -1,15 +1,27 @@
 import '../../../config/index.dart';
 import 'package:stream_chat_flutter/stream_chat_flutter.dart' as chat;
 
-class ChatPage extends StatefulWidget {
+class ChatPage extends StatelessWidget {
   static const String path = '/chat';
-  const ChatPage({super.key, String? userEmail});
+  const ChatPage({super.key});
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  Widget build(BuildContext context) {
+    return chat.StreamChat(
+      client: FirebaseAuthUtils.instance.streamChatClient,
+      streamChatThemeData: AppTheme().streamChatThemeData,
+      child: const _Body(),
+    );
+  }
 }
 
-class _ChatPageState extends State<ChatPage> {
-  late final _listController = chat.StreamChannelListController(
+class _Body extends StatefulWidget {
+  const _Body();
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  late final chat.StreamChannelListController _listController = chat.StreamChannelListController(
     client: chat.StreamChat.of(context).client,
     // filter: Filter._in(
     //   'members',
@@ -27,19 +39,12 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
     return chat.StreamChannelListView(
-        controller: _listController,
-        onChannelTap: (channel) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) {
-                return chat.StreamChannel(
-                  channel: channel,
-                  child: const ChannelPage(),
-                );
-              },
-            ),
-          );
-        });
+      controller: _listController,
+      onChannelTap: (channel) {
+        router.launchChannel(arguments: ChannelArgs(channel: channel));
+      },
+    );
   }
 }

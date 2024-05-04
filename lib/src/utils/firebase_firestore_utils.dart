@@ -10,6 +10,8 @@ class FirebaseFirestoreUtils {
 
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
+  final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
+
   Future createAppointment({
     required DoctorModel doctor,
     required DateTime date,
@@ -30,7 +32,7 @@ class FirebaseFirestoreUtils {
 
   Future<List<AppointmentModel>> getAppointments({required String userId}) async {
     final List<AppointmentModel> appointments = [];
-    final Query<Map<String, dynamic>> query = firebaseFirestore.collection('appointments').where('userId', isEqualTo: userId);
+    final Query<Map<String, dynamic>> query = firebaseFirestore.collection('appointments').where(_firebaseAuthUtils.isDoctor ? 'doctorId' : 'userId', isEqualTo: userId);
     final QuerySnapshot<Map<String, dynamic>> querySnapshot = await query.get();
     querySnapshot.docs.map((e) => e.data()..addAll({'id': e.id})).forEach((v) {
       appointments.add(AppointmentModel.fromJson(v));
@@ -41,6 +43,12 @@ class FirebaseFirestoreUtils {
   Future cancelAppointment({required String appointmentId}) async {
     await firebaseFirestore.collection('appointments').doc(appointmentId).update(
       {'status': 'canceled'},
+    );
+  }
+
+  Future completeAppointment({required String appointmentId}) async {
+    await firebaseFirestore.collection('appointments').doc(appointmentId).update(
+      {'status': 'completed'},
     );
   }
 }

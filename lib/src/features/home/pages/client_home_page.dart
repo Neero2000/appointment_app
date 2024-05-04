@@ -104,12 +104,12 @@ class _SpecialityList extends StatelessWidget {
       child: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 18),
         scrollDirection: Axis.horizontal,
-        itemCount: DataUtils().specialities.length,
+        itemCount: DataUtils.instance.specialities.length,
         separatorBuilder: (context, index) {
           return const SizedBox(width: 12);
         },
         itemBuilder: (context, index) {
-          return SpecialityItem(speciality: DataUtils().specialities[index]);
+          return SpecialityItem(speciality: DataUtils.instance.specialities[index]);
         },
       ),
     );
@@ -124,12 +124,12 @@ class _DoctorsList extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 18),
-      itemCount: DataUtils().doctors.length,
+      itemCount: DataUtils.instance.doctors.length,
       separatorBuilder: (context, index) {
         return const SizedBox(height: 16);
       },
       itemBuilder: (context, index) {
-        return DoctorCard(doctor: DataUtils().doctors[index]);
+        return DoctorCard(doctor: DataUtils.instance.doctors[index]);
       },
     );
   }

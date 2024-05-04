@@ -26,7 +26,7 @@ class AppointmentModel {
     status = json['status'];
     time = json['time'];
     userId = json['userId'];
-    doctor = DataUtils().doctors.firstWhereOrNull((doctor) => doctor.id == json['doctorId']) ?? DoctorModel.empty();
+    doctor = DataUtils.instance.doctors.firstWhereOrNull((doctor) => doctor.id == json['doctorId']) ?? DoctorModel.empty();
   }
 
   Map<String, dynamic> toJson() {

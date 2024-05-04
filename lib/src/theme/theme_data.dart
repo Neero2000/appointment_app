@@ -1,4 +1,5 @@
 import '../config/index.dart';
+import 'package:stream_chat_flutter/stream_chat_flutter.dart' as chat;
 
 class AppTheme {
   static final AppTheme _theme = AppTheme._internal();
@@ -63,6 +64,18 @@ class AppTheme {
         splashColor: Colors.transparent,
         pageTransitionsTheme: _pageTransitionsTheme,
       );
+
+  final chat.StreamChatThemeData streamChatThemeData = chat.StreamChatThemeData(
+    ownMessageTheme: chat.StreamMessageThemeData(
+      messageBackgroundColor: Colors.black,
+      messageTextStyle: const TextStyle(
+        color: Colors.white,
+      ),
+      avatarTheme: chat.StreamAvatarThemeData(
+        borderRadius: BorderRadius.circular(8),
+      ),
+    ),
+  );
 }
 
 /// Used by [PageTransitionsTheme] to define a [MaterialPageRoute] page transition animation.

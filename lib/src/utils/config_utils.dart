@@ -1,8 +1,8 @@
 import '../config/index.dart';
 
 class ConfigUtils {
-  static final ConfigUtils _instance = ConfigUtils._internal();
-  factory ConfigUtils() => _instance;
+  static final ConfigUtils instance = ConfigUtils._internal();
+  factory ConfigUtils() => instance;
   ConfigUtils._internal();
 
   //* General Config *//
