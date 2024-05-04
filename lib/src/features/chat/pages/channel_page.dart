@@ -12,21 +12,17 @@ class ChannelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ChannelArgs args = ModalRoute.of(context)?.settings.arguments as ChannelArgs;
-    return chat.StreamChat(
-      client: FirebaseAuthUtils.instance.streamChatClient,
-      streamChatThemeData: AppTheme().streamChatThemeData,
-      child: chat.StreamChannel(
-        channel: args.channel,
-        child: const Scaffold(
-          appBar: chat.StreamChannelHeader(),
-          body: Column(
-            children: <Widget>[
-              Expanded(
-                child: chat.StreamMessageListView(),
-              ),
-              chat.StreamMessageInput(),
-            ],
-          ),
+    return chat.StreamChannel(
+      channel: args.channel,
+      child: const Scaffold(
+        appBar: chat.StreamChannelHeader(),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: chat.StreamMessageListView(),
+            ),
+            chat.StreamMessageInput(),
+          ],
         ),
       ),
     );

@@ -6,16 +6,12 @@ class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
   @override
   Widget build(BuildContext context) {
-    return chat.StreamChat(
-      client: FirebaseAuthUtils.instance.streamChatClient,
-      streamChatThemeData: AppTheme().streamChatThemeData,
-      child: const Scaffold(
-        appBar: CustomAppBar(
-          title: 'Chat',
-          addBackButton: false,
-        ),
-        body: _Body(),
+    return const Scaffold(
+      appBar: CustomAppBar(
+        title: 'Chat',
+        addBackButton: false,
       ),
+      body: _Body(),
     );
   }
 }

@@ -334,7 +334,11 @@ class _AppState extends State<_App> {
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
           ],
-          builder: (context, child) => child!,
+          builder: (context, child) => chat.StreamChat(
+            client: FirebaseAuthUtils.instance.streamChatClient,
+            streamChatThemeData: AppTheme().streamChatThemeData,
+            child: child!,
+          ),
         ),
       ),
     );

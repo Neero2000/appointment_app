@@ -25,7 +25,10 @@ class FirebaseAuthUtils {
 
   String get email => _firebaseAuth.currentUser!.email!;
 
-  late chat.StreamChatClient streamChatClient;
+  late chat.StreamChatClient streamChatClient = chat.StreamChatClient(
+    _config.streamChatApiKey,
+    logLevel: chat.Level.OFF,
+  );
 
   Future init() async {
     final prefs = await SharedPreferences.getInstance();
@@ -67,10 +70,6 @@ class FirebaseAuthUtils {
   }
 
   Future _streamChatLogin() async {
-    streamChatClient = chat.StreamChatClient(
-      _config.streamChatApiKey,
-      logLevel: chat.Level.OFF,
-    );
     final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
     await streamChatClient.connectUser(
       chat.User(id: _firebaseAuth.currentUser!.uid),
