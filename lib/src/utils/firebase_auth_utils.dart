@@ -75,7 +75,7 @@ class FirebaseAuthUtils {
       chat.User(id: _firebaseAuth.currentUser!.uid),
       token.rawValue,
     );
-    final chat.Channel streamChatChannel = streamChatClient.channel('messaging', id: "doctor1");
+    final chat.Channel streamChatChannel = streamChatClient.channel('messaging');
     await streamChatChannel.watch();
   }
 
