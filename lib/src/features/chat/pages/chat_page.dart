@@ -9,7 +9,13 @@ class ChatPage extends StatelessWidget {
     return chat.StreamChat(
       client: FirebaseAuthUtils.instance.streamChatClient,
       streamChatThemeData: AppTheme().streamChatThemeData,
-      child: const _Body(),
+      child: const Scaffold(
+        appBar: CustomAppBar(
+          title: 'Chat',
+          addBackButton: false,
+        ),
+        body: _Body(),
+      ),
     );
   }
 }
@@ -32,12 +38,6 @@ class _BodyState extends State<_Body> {
   );
 
   @override
-  void dispose() {
-    _listController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
     return chat.StreamChannelListView(
@@ -45,6 +45,7 @@ class _BodyState extends State<_Body> {
       onChannelTap: (channel) {
         router.launchChannel(arguments: ChannelArgs(channel: channel));
       },
+      addAutomaticKeepAlives: true,
     );
   }
 }
