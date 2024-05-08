@@ -5,6 +5,7 @@ enum Pages {
   notifications,
   login,
   signup,
+  signupdoc,
   chat,
   doctorDetails,
   booking,

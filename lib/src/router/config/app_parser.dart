@@ -45,6 +45,8 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
   @override
   RouteInformation restoreRouteInformation(PageConfiguration configuration) {
     switch (configuration.page) {
+      case Pages.signupdoc:
+      return RouteInformation(uri: Uri.parse(SignupPageDoc.path));
       case Pages.splash:
         return RouteInformation(uri: Uri.parse(SplashPage.path));
       case Pages.home:

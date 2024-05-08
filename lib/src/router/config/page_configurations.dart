@@ -7,6 +7,11 @@ class PageConfigurations {
   PageConfigurations._internal();
 
   /// here we define all the page configurations
+  PageConfiguration signupdoc = const PageConfiguration(
+    path: SignupPageDoc.path,
+    page: Pages.signupdoc,
+    child: SignupPageDoc(),
+  );
   PageConfiguration splashPageConfig = const PageConfiguration(
     path: SplashPage.path,
     page: Pages.splash,
