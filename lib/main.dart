@@ -88,6 +88,8 @@ class _RootAppState extends State<RootApp> {
 
   final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
 
+  final FirebaseFirestoreUtils _firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+
   _RootAppState() {
     _routerHandler.setNewRoutePath(PageConfigurations().splashPageConfig);
   }
@@ -95,6 +97,7 @@ class _RootAppState extends State<RootApp> {
   @override
   void initState() {
     _firebaseAuthUtils.init();
+    _firebaseFirestoreUtils.init();
     super.initState();
   }
 

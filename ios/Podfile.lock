@@ -950,6 +950,11 @@ PODS:
     - GoogleUtilities/Environment (~> 7.13)
     - GoogleUtilities/UserDefaults (~> 7.13)
     - PromisesObjC (~> 2.3)
+  - backendless_sdk (0.0.1):
+    - BackendlessSwift (= 6.7.8)
+    - Flutter
+  - BackendlessSwift (6.7.8):
+    - Socket.IO-Client-Swift (~> 16.0)
   - BoringSSL-GRPC (0.0.32):
     - BoringSSL-GRPC/Implementation (= 0.0.32)
     - BoringSSL-GRPC/Interface (= 0.0.32)
@@ -1346,9 +1351,12 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Socket.IO-Client-Swift (16.1.0):
+    - Starscream (~> 4.0.6)
   - sqflite (0.0.3):
     - Flutter
     - FlutterMacOS
+  - Starscream (4.0.8)
   - SwiftyGif (5.4.5)
   - Toast (4.1.1)
   - uni_links (0.0.1):
@@ -1365,6 +1373,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - backendless_sdk (from `.symlinks/plugins/backendless_sdk/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
@@ -1398,6 +1407,7 @@ SPEC REPOS:
   trunk:
     - abseil
     - AppCheckCore
+    - BackendlessSwift
     - BoringSSL-GRPC
     - DKImagePickerController
     - DKPhotoGallery
@@ -1434,10 +1444,14 @@ SPEC REPOS:
     - ReachabilitySwift
     - RecaptchaInterop
     - SDWebImage
+    - Socket.IO-Client-Swift
+    - Starscream
     - SwiftyGif
     - Toast
 
 EXTERNAL SOURCES:
+  backendless_sdk:
+    :path: ".symlinks/plugins/backendless_sdk/ios"
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
   connectivity_plus:
@@ -1498,6 +1512,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
   AppCheckCore: 58dbd968d93b7c56650c28a1ac404d7a54307c0e
+  backendless_sdk: a9f9ee93f5e127ae8dd4253baa1b6e3c202afc5d
+  BackendlessSwift: 1e3c924e9704b846442d957ba958135e5c9097a6
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   cloud_firestore: a291c7ca0e498f9b08bbabd47a2499a5ae02c152
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
@@ -1556,7 +1572,9 @@ SPEC CHECKSUMS:
   SDWebImage: 40b0b4053e36c660a764958bff99eed16610acbb
   share_plus: 8875f4f2500512ea181eef553c3e27dba5135aad
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
+  Socket.IO-Client-Swift: ee4b8f80a3db18dd7f32b266ddf273310609443c
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
+  Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
   SwiftyGif: 706c60cf65fa2bc5ee0313beece843c8eb8194d4
   Toast: 1f5ea13423a1e6674c4abdac5be53587ae481c4e
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
@@ -1565,6 +1583,6 @@ SPEC CHECKSUMS:
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   wakelock_plus: 78ec7c5b202cab7761af8e2b2b3d0671be6c4ae1
 
-PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+PODFILE CHECKSUM: 7be2f5f74864d463a8ad433546ed1de7e0f29aef
 
 COCOAPODS: 1.15.2

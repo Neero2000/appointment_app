@@ -1,7 +1,6 @@
-import 'package:flutter_application_1/src/models/time_slot_model.dart';
-
 import '../config/index.dart';
 import 'package:intl/intl.dart';
+import 'package:backendless_sdk/backendless_sdk.dart';
 
 class FirebaseFirestoreUtils {
   static final FirebaseFirestoreUtils instance = FirebaseFirestoreUtils._internal();
@@ -11,6 +10,16 @@ class FirebaseFirestoreUtils {
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
+
+  Future init() async {
+    await Backendless.setUrl("https://api.backendless.com");
+    await Backendless.initApp(
+      applicationId: "DED06AAF-CAE2-4294-9A8C-432230134CFD",
+      androidApiKey: "E17A7486-CC27-4FDA-85D1-E5D8D70051A9",
+      iosApiKey: "3CCEB003-E43E-403A-BB6A-E35E53B4FD7C",
+      jsApiKey: "7818EF93-2D70-4E44-A32F-F1D48D7DF9DB",
+    );
+  }
 
   Future createDoctor({
     required String email,
@@ -87,6 +96,24 @@ class FirebaseFirestoreUtils {
         'speciality': doctor.speciality,
         'isCashPayment': isCashPayment,
         'total': total,
+      },
+    ).then((_) async {
+      await sendEmail(
+        date: DateFormat('yyyy-MM-dd').format(date),
+        time: timeSlot.time,
+        doctor: doctor,
+      );
+    });
+  }
+
+  Future sendEmail({required String date, required String time, required DoctorModel doctor}) async {
+    await Backendless.messaging.sendTextEmail(
+      "Your Healthcare Appointment Confirmation",
+      "Dear ${_firebaseAuthUtils.name},\n\n Thank you for booking your appointment with Doctor App. We are pleased to confirm your appointment as follows:\n\n Date: $date\n Time: $time\n Doctor/Provider: Dr. ${doctor.name}\n Department/Specialty: ${doctor.speciality}\n Please arrive 15 minutes prior to your scheduled appointment time to complete any necessary paperwork. Remember to bring your insurance card and a valid photo ID.\n\n If you have any questions or need to reschedule, please contact us or email us.\n\n We look forward to seeing you soon!\n\n Best Regards\n",
+      [_firebaseAuthUtils.email],
+    ).then(
+      (response) {
+        debugPrint("Email has been sent");
       },
     );
   }
