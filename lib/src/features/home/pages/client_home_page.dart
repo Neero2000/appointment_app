@@ -178,7 +178,7 @@ class _DoctorsListState extends State<_DoctorsList> {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 18),
       itemCount: _doctors.length,
       separatorBuilder: (context, index) {
         return const SizedBox(height: 16);

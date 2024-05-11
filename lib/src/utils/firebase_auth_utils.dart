@@ -12,11 +12,13 @@ class FirebaseAuthUtils {
 
   final ConfigUtils _config = ConfigUtils.instance;
 
+  final DataUtils _dataUtils = DataUtils.instance;
+
   final String _isDoctorKey = "isDoctorKey";
   late bool isDoctor;
 
   final String _assetPathKey = "assetPathKey";
-  late String assetPath;
+  String assetPath = '';
 
   final String _specialityKey = "specialityKey";
   late String speciality;
@@ -37,9 +39,9 @@ class FirebaseAuthUtils {
   Future init() async {
     final prefs = await SharedPreferences.getInstance();
     isDoctor = prefs.getBool(_isDoctorKey) ?? false;
-    assetPath = prefs.getString(_assetPathKey) ?? 'assets/images/doctor1.jpg';
-    speciality = prefs.getString(_specialityKey) ?? 'General';
-    await _streamChatLogin();
+    assetPath = prefs.getString(_assetPathKey) ?? '';
+    speciality = prefs.getString(_specialityKey) ?? _dataUtils.specialities.first.name;
+    // await _streamChatLogin();
   }
 
   Future _save() async {
@@ -50,6 +52,9 @@ class FirebaseAuthUtils {
   }
 
   Future _reset() async {
+    isDoctor = false;
+    assetPath = '';
+    speciality = _dataUtils.specialities.first.name;
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_isDoctorKey);
     prefs.remove(_assetPathKey);
@@ -115,15 +120,15 @@ class FirebaseAuthUtils {
     }
   }
 
-  Future _streamChatLogin() async {
-    final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
-    await streamChatClient.connectUser(
-      chat.User(id: _firebaseAuth.currentUser!.uid),
-      token.rawValue,
-    );
-    final chat.Channel streamChatChannel = streamChatClient.channel('messaging');
-    await streamChatChannel.watch();
-  }
+  // Future _streamChatLogin() async {
+  //   final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
+  //   await streamChatClient.connectUser(
+  //     chat.User(id: _firebaseAuth.currentUser!.uid),
+  //     token.rawValue,
+  //   );
+  //   final chat.Channel streamChatChannel = streamChatClient.channel('messaging');
+  //   await streamChatChannel.watch();
+  // }
 
   Future signout({required VoidCallback onSuccess}) async {
     try {

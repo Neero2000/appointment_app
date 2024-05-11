@@ -75,7 +75,10 @@ class _BodyPageState extends State<_Body> {
       );
     }
     if (_isLoading) {
-      return const DoctorsLoading();
+      return Container(
+        padding: const EdgeInsets.symmetric(vertical: 30),
+        child: const DoctorsLoading(),
+      );
     }
     if (_doctors.isEmpty) {
       return DoctorsEmpty(

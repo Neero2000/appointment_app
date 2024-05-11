@@ -87,6 +87,16 @@ class _BottomNavBar extends StatelessWidget {
                 text: 'Confirmer',
                 isEnabled: isEnabled,
                 loadingFunction: () async {
+                  final FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+                  List<AppointmentModel> appointments = await firebaseFirestoreUtils.getAppointmentByDoctorDateTime(
+                    doctorId: doctor.userId,
+                    date: date,
+                    timeSlot: timeSlot!,
+                  );
+                  if (appointments.isNotEmpty) {
+                    ToastUtils().showErrorToast(msg: 'This Date and Time Slot are not available!');
+                    return;
+                  }
                   router.launchPayment(
                     arguments: PaymentArgs(
                       doctor: doctor,

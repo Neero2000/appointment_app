@@ -73,6 +73,7 @@ class _Profile extends StatelessWidget {
   const _Profile();
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuthUtils firebaseAuthUtils = FirebaseAuthUtils.instance;
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -84,11 +85,19 @@ class _Profile extends StatelessWidget {
             borderRadius: BorderRadius.circular(100),
             color: Colors.grey[300],
           ),
-          child: const Icon(
-            Icons.person,
-            size: 50,
-            color: Colors.grey,
-          ),
+          child: firebaseAuthUtils.assetPath.isEmpty
+              ? const Icon(
+                  Icons.person,
+                  size: 50,
+                  color: Colors.grey,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(100),
+                  child: Image.asset(
+                    firebaseAuthUtils.assetPath,
+                    fit: BoxFit.cover,
+                  ),
+                ),
         ),
         const SizedBox(width: 18),
         Column(

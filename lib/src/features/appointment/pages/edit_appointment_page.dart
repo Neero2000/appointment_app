@@ -119,6 +119,15 @@ class _BottomNavBar extends StatelessWidget {
                 isEnabled: isEnabled,
                 loadingFunction: () async {
                   FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+                  List<AppointmentModel> appointments = await firebaseFirestoreUtils.getAppointmentByDoctorDateTime(
+                    doctorId: appointment.doctorId,
+                    date: date,
+                    timeSlot: timeSlot!,
+                  );
+                  if (appointments.isNotEmpty) {
+                    ToastUtils().showErrorToast(msg: 'This Date and Time Slot are not available!');
+                    return;
+                  }
                   await firebaseFirestoreUtils
                       .editAppointment(
                     appointment: appointment,

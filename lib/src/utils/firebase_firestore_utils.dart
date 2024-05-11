@@ -1,3 +1,5 @@
+import 'package:flutter_application_1/src/models/time_slot_model.dart';
+
 import '../config/index.dart';
 import 'package:intl/intl.dart';
 
@@ -116,6 +118,23 @@ class FirebaseFirestoreUtils {
     final QuerySnapshot<Map<String, dynamic>> querySnapshot = await query.get();
     querySnapshot.docs.map((e) => e.data()..addAll({'id': e.id})).forEach((v) {
       appointments.add(AppointmentModel.fromJson(v));
+    });
+    return appointments;
+  }
+
+  Future<List<AppointmentModel>> getAppointmentByDoctorDateTime({
+    required String doctorId,
+    required DateTime date,
+    required TimeSlotModel timeSlot,
+  }) async {
+    final List<AppointmentModel> appointments = [];
+    final Query<Map<String, dynamic>> query = firebaseFirestore.collection('appointments').where('doctorId', isEqualTo: doctorId);
+    final QuerySnapshot<Map<String, dynamic>> querySnapshot = await query.get();
+    querySnapshot.docs.map((e) => e.data()..addAll({'id': e.id})).forEach((v) {
+      final AppointmentModel appointment = AppointmentModel.fromJson(v);
+      if (appointment.date == DateFormat('yyyy-MM-dd').format(date) && appointment.time == timeSlot.time && appointment.status == 'pending') {
+        appointments.add(appointment);
+      }
     });
     return appointments;
   }

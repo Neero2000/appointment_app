@@ -7,7 +7,7 @@ class DoctorsLoading extends StatelessWidget {
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       itemCount: 3,
       itemBuilder: (context, index) {
         return const _Item1();
