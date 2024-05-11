@@ -41,7 +41,7 @@ class FirebaseAuthUtils {
     isDoctor = prefs.getBool(_isDoctorKey) ?? false;
     assetPath = prefs.getString(_assetPathKey) ?? '';
     speciality = prefs.getString(_specialityKey) ?? _dataUtils.specialities.first.name;
-    // await _streamChatLogin();
+    await _streamChatLogin();
   }
 
   Future _save() async {
@@ -82,7 +82,7 @@ class FirebaseAuthUtils {
           speciality = doctor.speciality;
         }
         _save();
-        // _streamChatLogin();
+        _streamChatLogin();
         onSuccess();
         _toastUtils.showSuccessToast(msg: 'Signed in successfully');
       } else {
@@ -114,6 +114,7 @@ class FirebaseAuthUtils {
       this.assetPath = assetPath;
       this.speciality = speciality;
       _save();
+      _streamChatLogin();
       onSuccess();
       debugPrint('Registration successful for ${userCredential.user!.email}');
       _toastUtils.showSuccessToast(msg: 'Signed up successfully');
@@ -124,20 +125,31 @@ class FirebaseAuthUtils {
     }
   }
 
-  // Future _streamChatLogin() async {
-  //   final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
-  //   await streamChatClient.connectUser(
-  //     chat.User(id: _firebaseAuth.currentUser!.uid),
-  //     token.rawValue,
-  //   );
-  //   final chat.Channel streamChatChannel = streamChatClient.channel('messaging');
-  //   await streamChatChannel.watch();
-  // }
+  Future _streamChatLogin() async {
+    final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
+    await streamChatClient.connectUser(
+      chat.User(
+        id: _firebaseAuth.currentUser!.uid,
+        name: _firebaseAuth.currentUser?.email?.split('@').first,
+      ),
+      token.rawValue,
+    );
+  }
+
+  Future streamChatCreateChannel({required String doctorId}) async {
+    await streamChatClient.createChannel('messaging', channelData: {
+      "members": [
+        _firebaseAuth.currentUser!.uid,
+        doctorId,
+      ],
+    });
+  }
 
   Future signout({required VoidCallback onSuccess}) async {
     try {
       await _firebaseAuth.signOut();
       await _reset();
+      await streamChatClient.disconnectUser();
       onSuccess();
       debugPrint('Signout successful');
       _toastUtils.showSuccessToast(msg: 'Signed out successfully');

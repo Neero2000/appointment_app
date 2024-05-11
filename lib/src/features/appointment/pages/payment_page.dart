@@ -163,12 +163,14 @@ class _BottomNavBar extends StatelessWidget {
                     total: (doctor.price * 0.1).toInt() + doctor.price,
                   )
                       .then(
-                    (_) {
-                      router.launchAppointmentSuccess(
-                        arguments: const AppointmentSuccessArgs(
-                          successText: 'Congratulations!\nYour appointment is booked!',
-                        ),
-                      );
+                    (_) async {
+                      await firebaseAuthUtils.streamChatCreateChannel(doctorId: doctor.userId).then((_) {
+                        router.launchAppointmentSuccess(
+                          arguments: const AppointmentSuccessArgs(
+                            successText: 'Congratulations!\nYour appointment is booked!',
+                          ),
+                        );
+                      });
                     },
                   );
                 },
