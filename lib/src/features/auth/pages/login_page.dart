@@ -182,12 +182,18 @@ class _TextFieldTitle extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
+    return Row(
+      children: [
+        Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -205,15 +211,13 @@ class _Signup extends StatelessWidget {
           onPressed: () {
             router.launchSignup();
           },
-          child: Flexible(
-            child: Text(
-              "Dont't have an account? Signup!",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey[800],
-                fontWeight: FontWeight.w500,
-                decoration: TextDecoration.underline,
-              ),
+          child: Text(
+            "Dont't have an account? Signup!",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[800],
+              fontWeight: FontWeight.w500,
+              decoration: TextDecoration.underline,
             ),
           ),
         ),

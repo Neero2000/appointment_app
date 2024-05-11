@@ -358,17 +358,21 @@ class _Button extends StatelessWidget {
 
 class _TextFieldTitle extends StatelessWidget {
   final String text;
-  const _TextFieldTitle({
-    required this.text,
-  });
+  const _TextFieldTitle({required this.text});
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
+    return Row(
+      children: [
+        Flexible(
+          child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

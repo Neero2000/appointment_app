@@ -90,6 +90,8 @@ class FirebaseAuthUtils {
         debugPrint('User does not exist');
         _toastUtils.showSuccessToast(msg: 'User does not exist');
       }
+    } on FirebaseAuthException catch (error) {
+      debugPrint('Login failed: $error');
     } catch (error) {
       debugPrint('Login failed: $error');
     }
@@ -115,6 +117,8 @@ class FirebaseAuthUtils {
       onSuccess();
       debugPrint('Registration successful for ${userCredential.user!.email}');
       _toastUtils.showSuccessToast(msg: 'Signed up successfully');
+    } on FirebaseAuthException catch (error) {
+      debugPrint('Registration failed: $error');
     } catch (error) {
       debugPrint('Registration failed: $error');
     }
@@ -137,6 +141,8 @@ class FirebaseAuthUtils {
       onSuccess();
       debugPrint('Signout successful');
       _toastUtils.showSuccessToast(msg: 'Signed out successfully');
+    } on FirebaseAuthException catch (error) {
+      debugPrint('Signout failed: $error');
     } catch (error) {
       debugPrint('Signout failed: $error');
     }
