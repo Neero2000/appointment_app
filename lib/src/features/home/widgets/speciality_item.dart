@@ -7,10 +7,11 @@ class SpecialityItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
     return CupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        // Add your onTap logic here
+        router.launchDoctors(arguments: DoctorsArgs(speciality: speciality.name));
       },
       child: SizedBox(
         width: 80,

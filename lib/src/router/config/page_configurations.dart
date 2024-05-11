@@ -7,11 +7,6 @@ class PageConfigurations {
   PageConfigurations._internal();
 
   /// here we define all the page configurations
-  PageConfiguration signupdoc = const PageConfiguration(
-    path: SignupPageDoc.path,
-    page: Pages.signupdoc,
-    child: SignupPageDoc(),
-  );
   PageConfiguration splashPageConfig = const PageConfiguration(
     path: SplashPage.path,
     page: Pages.splash,
@@ -57,14 +52,24 @@ class PageConfigurations {
     page: Pages.payment,
     child: PaymentPage(),
   );
-  PageConfiguration appointmentBookedPageConfig = const PageConfiguration(
-    path: AppointmentBookedPage.path,
-    page: Pages.appointmentBooked,
-    child: AppointmentBookedPage(),
+  PageConfiguration appointmentSuccessPageConfig = const PageConfiguration(
+    path: AppointmentSuccessPage.path,
+    page: Pages.appointmentSuccess,
+    child: AppointmentSuccessPage(),
   );
   PageConfiguration channelPageConfig = const PageConfiguration(
     path: ChannelPage.path,
     page: Pages.channel,
     child: ChannelPage(),
+  );
+  PageConfiguration doctorsPageConfig = const PageConfiguration(
+    path: DoctorsPage.path,
+    page: Pages.doctors,
+    child: DoctorsPage(),
+  );
+  PageConfiguration editAppointmentPageConfig = const PageConfiguration(
+    path: EditAppointmentPage.path,
+    page: Pages.editAppointment,
+    child: EditAppointmentPage(),
   );
 }

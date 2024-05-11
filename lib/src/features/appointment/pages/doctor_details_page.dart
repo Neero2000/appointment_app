@@ -227,20 +227,20 @@ class _Schedule extends StatelessWidget {
   const _Schedule({required this.doctor});
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Days: ${doctor.startDate}-${doctor.endDate}',
-          style: const TextStyle(
+          'Days: Monday - Friday',
+          style: TextStyle(
             color: Color(0xFF6B7280),
             fontWeight: FontWeight.bold,
             fontSize: 16,
           ),
         ),
         Text(
-          'Hours: ${doctor.startTime} - ${doctor.endTime}',
-          style: const TextStyle(
+          'Hours: Monday - Friday',
+          style: TextStyle(
             color: Color(0xFF6B7280),
             fontWeight: FontWeight.bold,
             fontSize: 16,

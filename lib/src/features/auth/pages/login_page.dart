@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 class LoginPage extends StatelessWidget {
   static const path = '/login';
   const LoginPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +29,8 @@ class _InitState extends State<_Init> {
   final FirebaseAuthUtils _firebaseAuthUtils = FirebaseAuthUtils.instance;
   final ValidationUtils _validationUtils = ValidationUtils.instance;
 
+  final FirebaseFirestoreUtils _firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+
   Future<bool> _validateFunction() async {
     final bool validation = _formKey.currentState?.validate() ?? false;
     if (!validation) {
@@ -50,6 +51,9 @@ class _InitState extends State<_Init> {
       password: _passwordController.text.trim(),
       onSuccess: () {
         router.launchHome();
+      },
+      getDoctor: (String userId) async {
+        return await _firebaseFirestoreUtils.getDoctorById(userId: userId);
       },
     );
   }

@@ -116,20 +116,75 @@ class _SpecialityList extends StatelessWidget {
   }
 }
 
-class _DoctorsList extends StatelessWidget {
+class _DoctorsList extends StatefulWidget {
   const _DoctorsList();
   @override
+  State<_DoctorsList> createState() => _DoctorsListState();
+}
+
+class _DoctorsListState extends State<_DoctorsList> {
+  final FirebaseFirestoreUtils _firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+
+  final List<DoctorModel> _doctors = [];
+  bool _isLoading = true;
+  bool _isError = false;
+
+  @override
+  void initState() {
+    _fetchBestDoctors();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _isLoading = true;
+    _isError = false;
+    super.dispose();
+  }
+
+  Future _fetchBestDoctors() async {
+    final List<DoctorModel> doctors = await _firebaseFirestoreUtils.getBestDoctors();
+    if (mounted) {
+      setState(() {
+        _doctors.clear();
+        _doctors.addAll(doctors);
+        _isLoading = false;
+      });
+    }
+  }
+
+  void _refresh() {
+    setState(() {
+      _isLoading = true;
+      _isError = false;
+    });
+    _fetchBestDoctors();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_isError) {
+      return ErrorRefreshItem(
+        errorText: "Error loading doctors. Please try again later.",
+        refresh: _refresh,
+      );
+    }
+    if (_isLoading) {
+      return const DoctorsLoading();
+    }
+    if (_doctors.isEmpty) {
+      return DoctorsEmpty(refresh: _refresh);
+    }
     return ListView.separated(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      itemCount: DataUtils.instance.doctors.length,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 30),
+      itemCount: _doctors.length,
       separatorBuilder: (context, index) {
         return const SizedBox(height: 16);
       },
       itemBuilder: (context, index) {
-        return DoctorCard(doctor: DataUtils.instance.doctors[index]);
+        return DoctorCard(doctor: _doctors[index]);
       },
     );
   }

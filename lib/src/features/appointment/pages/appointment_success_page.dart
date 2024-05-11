@@ -1,11 +1,16 @@
 import '../../../config/index.dart';
 
-class AppointmentBookedPage extends StatelessWidget {
-  static const String path = '/appointment_booked';
-  const AppointmentBookedPage({super.key});
+class AppointmentSuccessArgs {
+  final String successText;
+  const AppointmentSuccessArgs({required this.successText});
+}
 
+class AppointmentSuccessPage extends StatelessWidget {
+  static const String path = '/appointment_success';
+  const AppointmentSuccessPage({super.key});
   @override
   Widget build(BuildContext context) {
+    final AppointmentSuccessArgs args = ModalRoute.of(context)?.settings.arguments as AppointmentSuccessArgs;
     return Scaffold(
       bottomNavigationBar: const _BottomNavBar(),
       body: Column(
@@ -19,14 +24,14 @@ class AppointmentBookedPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 14),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
                 child: Text(
-                  'Congratulations!\nYour appointment is booked!',
+                  args.successText,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),

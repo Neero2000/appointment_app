@@ -1,33 +1,62 @@
 import '../../../config/index.dart';
+import 'package:collection/collection.dart';
 
-class BookingArgs {
-  final DoctorModel doctor;
-  const BookingArgs({required this.doctor});
+class EditAppointmentArgs {
+  final AppointmentModel appointment;
+  final VoidCallback refresh;
+  const EditAppointmentArgs({
+    required this.appointment,
+    required this.refresh,
+  });
 }
 
-class BookingPage extends StatefulWidget {
-  static const String path = '/booking';
-  const BookingPage({super.key});
+class EditAppointmentPage extends StatelessWidget {
+  static const String path = '/edit_appointment';
+  const EditAppointmentPage({super.key});
   @override
-  State<BookingPage> createState() => _BookingPageState();
+  Widget build(BuildContext context) {
+    final EditAppointmentArgs args = ModalRoute.of(context)?.settings.arguments as EditAppointmentArgs;
+    return _Page(
+      appointment: args.appointment,
+      refresh: args.refresh,
+    );
+  }
 }
 
-class _BookingPageState extends State<BookingPage> {
+class _Page extends StatefulWidget {
+  final AppointmentModel appointment;
+  final VoidCallback refresh;
+  const _Page({
+    required this.appointment,
+    required this.refresh,
+  });
+  @override
+  State<_Page> createState() => _PageState();
+}
+
+class _PageState extends State<_Page> {
   DateTime _date = DateTime.now();
   TimeSlotModel? _timeSlot;
 
   bool get _isWeekend => [DateTime.friday, DateTime.saturday].contains(_date.weekday);
 
   @override
+  void initState() {
+    _date = DateTime.parse(widget.appointment.date);
+    _timeSlot = DataUtils.instance.timeSlots.firstWhereOrNull((_) => _.time == widget.appointment.time);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final BookingArgs args = ModalRoute.of(context)?.settings.arguments as BookingArgs;
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Appointment'),
+      appBar: const CustomAppBar(title: 'Edit Appointment'),
       bottomNavigationBar: _BottomNavBar(
-        doctor: args.doctor,
+        appointment: widget.appointment,
         date: _date,
         timeSlot: _timeSlot,
         isEnabled: _timeSlot != null && !_isWeekend,
+        refresh: widget.refresh,
       ),
       body: CustomScrollView(
         slivers: [
@@ -61,15 +90,17 @@ class _BookingPageState extends State<BookingPage> {
 }
 
 class _BottomNavBar extends StatelessWidget {
-  final DoctorModel doctor;
+  final AppointmentModel appointment;
   final DateTime date;
   final TimeSlotModel? timeSlot;
   final bool isEnabled;
+  final VoidCallback refresh;
   const _BottomNavBar({
-    required this.doctor,
+    required this.appointment,
     required this.date,
     required this.timeSlot,
     required this.isEnabled,
+    required this.refresh,
   });
   @override
   Widget build(BuildContext context) {
@@ -87,12 +118,22 @@ class _BottomNavBar extends StatelessWidget {
                 text: 'Confirmer',
                 isEnabled: isEnabled,
                 loadingFunction: () async {
-                  router.launchPayment(
-                    arguments: PaymentArgs(
-                      doctor: doctor,
-                      date: date,
-                      timeSlot: timeSlot!,
-                    ),
+                  FirebaseFirestoreUtils firebaseFirestoreUtils = FirebaseFirestoreUtils.instance;
+                  await firebaseFirestoreUtils
+                      .editAppointment(
+                    appointment: appointment,
+                    date: date,
+                    timeSlot: timeSlot!,
+                  )
+                      .then(
+                    (_) {
+                      router.launchAppointmentSuccess(
+                        arguments: const AppointmentSuccessArgs(
+                          successText: 'Congratulations!\nYour appointment is eddited successfully',
+                        ),
+                      );
+                      refresh();
+                    },
                   );
                 },
               ),

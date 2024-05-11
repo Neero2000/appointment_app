@@ -1,9 +1,9 @@
 import '../../../config/index.dart';
 import 'package:flutter/cupertino.dart';
 
-class AppointmentsEmpty extends StatelessWidget {
+class DoctorsEmpty extends StatelessWidget {
   final VoidCallback refresh;
-  const AppointmentsEmpty({
+  const DoctorsEmpty({
     super.key,
     required this.refresh,
   });
@@ -45,7 +45,7 @@ class _Title extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      "No Appointments Found",
+      "No Doctors Found",
       style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w800,
@@ -63,7 +63,7 @@ class _Subtitle extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: "Your appointments will appear here ",
+            text: "doctors will appear here ",
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[600],
@@ -89,7 +89,7 @@ class _Icon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Icon(
-      CupertinoIcons.calendar,
+      Icons.medical_information,
       color: Colors.grey[400]!,
       size: 80,
     );

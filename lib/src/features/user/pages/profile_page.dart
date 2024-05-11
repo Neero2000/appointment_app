@@ -77,15 +77,17 @@ class _Profile extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SizedBox(width: 18),
-        SizedBox(
+        Container(
           height: 80,
           width: 80,
-          child: ClipRRect(
+          decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            child: Image.asset(
-              "assets/12.jpg",
-              fit: BoxFit.cover,
-            ),
+            color: Colors.grey[300],
+          ),
+          child: const Icon(
+            Icons.person,
+            size: 50,
+            color: Colors.grey,
           ),
         ),
         const SizedBox(width: 18),

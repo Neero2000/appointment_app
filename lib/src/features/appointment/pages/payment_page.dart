@@ -160,10 +160,15 @@ class _BottomNavBar extends StatelessWidget {
                     timeSlot: timeSlot,
                     isCashPayment: isCashPayment,
                     userId: firebaseAuthUtils.uid,
+                    total: (doctor.price * 0.1).toInt() + doctor.price,
                   )
                       .then(
                     (_) {
-                      router.launchAppointmentBooked();
+                      router.launchAppointmentSuccess(
+                        arguments: const AppointmentSuccessArgs(
+                          successText: 'Congratulations!\nYour appointment is booked!',
+                        ),
+                      );
                     },
                   );
                 },

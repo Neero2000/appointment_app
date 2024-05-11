@@ -32,10 +32,14 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return pages.bookingPageConfig;
       case PaymentPage.path:
         return pages.paymentPageConfig;
-      case AppointmentBookedPage.path:
-        return pages.appointmentBookedPageConfig;
+      case AppointmentSuccessPage.path:
+        return pages.appointmentSuccessPageConfig;
       case ChannelPage.path:
         return pages.channelPageConfig;
+      case DoctorsPage.path:
+        return pages.doctorsPageConfig;
+      case EditAppointmentPage.path:
+        return pages.editAppointmentPageConfig;
       default:
         return pages.splashPageConfig;
     }
@@ -45,8 +49,6 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
   @override
   RouteInformation restoreRouteInformation(PageConfiguration configuration) {
     switch (configuration.page) {
-      case Pages.signupdoc:
-      return RouteInformation(uri: Uri.parse(SignupPageDoc.path));
       case Pages.splash:
         return RouteInformation(uri: Uri.parse(SplashPage.path));
       case Pages.home:
@@ -65,10 +67,14 @@ class AppParser extends RouteInformationParser<PageConfiguration> {
         return RouteInformation(uri: Uri.parse(BookingPage.path));
       case Pages.payment:
         return RouteInformation(uri: Uri.parse(PaymentPage.path));
-      case Pages.appointmentBooked:
-        return RouteInformation(uri: Uri.parse(AppointmentBookedPage.path));
+      case Pages.appointmentSuccess:
+        return RouteInformation(uri: Uri.parse(AppointmentSuccessPage.path));
       case Pages.channel:
         return RouteInformation(uri: Uri.parse(ChannelPage.path));
+      case Pages.doctors:
+        return RouteInformation(uri: Uri.parse(DoctorsPage.path));
+      case Pages.editAppointment:
+        return RouteInformation(uri: Uri.parse(EditAppointmentPage.path));
       default:
         return RouteInformation(uri: Uri.parse(SplashPage.path));
     }

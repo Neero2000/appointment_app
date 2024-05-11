@@ -47,4 +47,33 @@ class ValidationUtils {
     }
     return null;
   }
+
+  String? validatePrice({required String price, bool nullable = false}) {
+    // the price is empty
+    if (price.isEmpty) {
+      if (nullable) {
+        return null;
+      }
+      return 'price is empty';
+    }
+    // price is incorrect
+    if (!RegExp(r"^[0-9]+$").hasMatch(price)) {
+      return 'Incorrect price';
+    }
+    return null;
+  }
+
+  String? validateAddress({required String address, bool nullable = false}) {
+    // the address is empty
+    if (address.isEmpty) {
+      if (nullable) {
+        return null;
+      }
+      return 'address is empty';
+    }
+    if (address.length < 6) {
+      return 'address must not have less than 6 characters';
+    }
+    return null;
+  }
 }

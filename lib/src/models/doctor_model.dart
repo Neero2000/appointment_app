@@ -1,50 +1,57 @@
 class DoctorModel {
-  final String id;
-  final String name;
-  final String assetPath;
-  final String speciality;
-  final bool isPaymentCash;
-  final int patientNumber;
-  final int experience;
-  final double notation;
-  final int reviewNumber;
-  final String startDate;
-  final String endDate;
-  final String startTime;
-  final String endTime;
-  final int price;
+  late String userId;
+  late String email;
+  late String name;
+  late int price;
+  late String address;
+  late String speciality;
+  late String assetPath;
+  late int patientNumber;
+  late int experience;
+  late double notation;
+  late int reviewNumber;
 
   DoctorModel({
-    required this.id,
+    required this.userId,
+    required this.email,
     required this.name,
-    required this.assetPath,
+    required this.price,
+    required this.address,
     required this.speciality,
-    required this.isPaymentCash,
+    required this.assetPath,
     required this.patientNumber,
     required this.experience,
     required this.notation,
     required this.reviewNumber,
-    required this.startDate,
-    required this.endDate,
-    required this.startTime,
-    required this.endTime,
-    required this.price,
   });
 
-  DoctorModel.empty({
-    this.id = '',
-    this.name = '-',
-    this.assetPath = '',
-    this.speciality = '-',
-    this.isPaymentCash = false,
-    this.patientNumber = 0,
-    this.experience = 0,
-    this.notation = 0,
-    this.reviewNumber = 0,
-    this.startDate = '-',
-    this.endDate = '-',
-    this.startTime = '-',
-    this.endTime = '-',
-    this.price = 0,
-  });
+  DoctorModel.fromJson(Map<String, dynamic> json) {
+    userId = json['userId'];
+    email = json['email'];
+    name = json['name'];
+    price = json['price'];
+    address = json['address'];
+    speciality = json['speciality'];
+    assetPath = json['assetPath'];
+    patientNumber = json['patientNumber'];
+    experience = json['experience'];
+    notation = json['notation'];
+    reviewNumber = json['reviewNumber'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['userId'] = userId;
+    data['email'] = email;
+    data['name'] = name;
+    data['price'] = price;
+    data['address'] = address;
+    data['speciality'] = speciality;
+    data['assetPath'] = assetPath;
+    data['patientNumber'] = patientNumber;
+    data['experience'] = experience;
+    data['notation'] = notation;
+    data['reviewNumber'] = reviewNumber;
+    return data;
+  }
 }

@@ -4,6 +4,7 @@ export 'widgets/custom_error_widget.dart';
 export 'widgets/custom_app_bar.dart';
 export 'widgets/error_refresh_item.dart';
 export 'widgets/custom_field.dart';
+export 'widgets/custom_popup_field.dart';
 
 // features
 export '../features/home/index.dart';

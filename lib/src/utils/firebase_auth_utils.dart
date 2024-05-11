@@ -12,10 +12,14 @@ class FirebaseAuthUtils {
 
   final ConfigUtils _config = ConfigUtils.instance;
 
-  final DataUtils _dataUtils = DataUtils.instance;
-
   final String _isDoctorKey = "isDoctorKey";
   late bool isDoctor;
+
+  final String _assetPathKey = "assetPathKey";
+  late String assetPath;
+
+  final String _specialityKey = "specialityKey";
+  late String speciality;
 
   bool get isLoggedIn => _firebaseAuth.currentUser != null;
 
@@ -33,20 +37,31 @@ class FirebaseAuthUtils {
   Future init() async {
     final prefs = await SharedPreferences.getInstance();
     isDoctor = prefs.getBool(_isDoctorKey) ?? false;
+    assetPath = prefs.getString(_assetPathKey) ?? 'assets/images/doctor1.jpg';
+    speciality = prefs.getString(_specialityKey) ?? 'General';
     await _streamChatLogin();
   }
 
   Future _save() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool(_isDoctorKey, isDoctor);
+    prefs.setString(_assetPathKey, assetPath);
+    prefs.setString(_specialityKey, speciality);
   }
 
   Future _reset() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove(_isDoctorKey);
+    prefs.remove(_assetPathKey);
+    prefs.remove(_specialityKey);
   }
 
-  Future login({required String email, required String password, required VoidCallback onSuccess}) async {
+  Future login({
+    required String email,
+    required String password,
+    required VoidCallback onSuccess,
+    required Future<DoctorModel?> Function(String) getDoctor,
+  }) async {
     try {
       final UserCredential userCredential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -54,9 +69,15 @@ class FirebaseAuthUtils {
       );
       if (userCredential.user != null) {
         debugPrint('Login successful for $email');
-        isDoctor = _dataUtils.doctors.map((d) => d.id).contains(userCredential.user?.uid ?? '');
+        onSuccess();
+        final DoctorModel? doctor = await getDoctor(_firebaseAuth.currentUser!.uid);
+        isDoctor = doctor != null;
+        if (doctor != null) {
+          assetPath = doctor.assetPath;
+          speciality = doctor.speciality;
+        }
         _save();
-        _streamChatLogin();
+        // _streamChatLogin();
         onSuccess();
         _toastUtils.showSuccessToast(msg: 'Signed in successfully');
       } else {
@@ -69,6 +90,31 @@ class FirebaseAuthUtils {
     }
   }
 
+  Future signup({
+    required String email,
+    required String password,
+    required bool isDoctor,
+    required String assetPath,
+    required String speciality,
+    required VoidCallback onSuccess,
+  }) async {
+    try {
+      final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      this.isDoctor = isDoctor;
+      this.assetPath = assetPath;
+      this.speciality = speciality;
+      _save();
+      onSuccess();
+      debugPrint('Registration successful for ${userCredential.user!.email}');
+      _toastUtils.showSuccessToast(msg: 'Signed up successfully');
+    } catch (error) {
+      debugPrint('Registration failed: $error');
+    }
+  }
+
   Future _streamChatLogin() async {
     final token = streamChatClient.devToken(_firebaseAuth.currentUser!.uid);
     await streamChatClient.connectUser(
@@ -77,22 +123,6 @@ class FirebaseAuthUtils {
     );
     final chat.Channel streamChatChannel = streamChatClient.channel('messaging');
     await streamChatChannel.watch();
-  }
-
-  Future signup({required String email, required String password, required VoidCallback onSuccess}) async {
-    try {
-      final UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      isDoctor = false;
-      _save();
-      onSuccess();
-      debugPrint('Registration successful for ${userCredential.user!.email}');
-      _toastUtils.showSuccessToast(msg: 'Signed up successfully');
-    } catch (error) {
-      debugPrint('Registration failed: $error');
-    }
   }
 
   Future signout({required VoidCallback onSuccess}) async {

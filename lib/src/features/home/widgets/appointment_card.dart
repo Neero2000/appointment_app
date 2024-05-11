@@ -1,4 +1,5 @@
 import '../../../config/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentCard extends StatelessWidget {
@@ -21,7 +22,7 @@ class AppointmentCard extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 18),
-            _Doctor(appointment: appointment),
+            _Doctor(appointment: appointment, refresh: refresh),
             const SizedBox(height: 25),
             _DateAndTime(appointment: appointment),
             const SizedBox(height: 25),
@@ -36,39 +37,83 @@ class AppointmentCard extends StatelessWidget {
 
 class _Doctor extends StatelessWidget {
   final AppointmentModel appointment;
-  const _Doctor({required this.appointment});
+  final VoidCallback refresh;
+  const _Doctor({
+    required this.appointment,
+    required this.refresh,
+  });
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundImage: AssetImage(appointment.doctor.assetPath),
+          backgroundImage: AssetImage(appointment.doctorAssetPath),
         ),
         const SizedBox(width: 10),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              appointment.doctor.name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                appointment.doctorName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            Text(
-              appointment.doctor.speciality,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
-            )
-          ],
+              Text(
+                appointment.speciality,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
+              )
+            ],
+          ),
         ),
+        ...appointment.status == 'pending'
+            ? [
+                _Edit(
+                  appointment: appointment,
+                  refresh: refresh,
+                ),
+              ]
+            : [],
+        const SizedBox(width: 10),
       ],
+    );
+  }
+}
+
+class _Edit extends StatelessWidget {
+  final AppointmentModel appointment;
+  final VoidCallback refresh;
+  const _Edit({
+    required this.appointment,
+    required this.refresh,
+  });
+  @override
+  Widget build(BuildContext context) {
+    final RouterCubit router = BlocProvider.of<RouterCubit>(context, listen: false);
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () {
+        router.launchEditAppointment(
+          arguments: EditAppointmentArgs(
+            appointment: appointment,
+            refresh: refresh,
+          ),
+        );
+      },
+      child: Icon(
+        Icons.edit,
+        color: Colors.grey[300],
+        size: 30,
+      ),
     );
   }
 }
